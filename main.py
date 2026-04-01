@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import threading
 import httpx
 from fastapi import FastAPI
 from maxapi import Bot, Dispatcher
@@ -137,6 +138,7 @@ async def root():
 async def health():
     return {"status": "ok"}
 
+# ========== ЗАПУСК ==========
 async def main():
     await bot.delete_webhook()
     asyncio.create_task(keep_alive())
