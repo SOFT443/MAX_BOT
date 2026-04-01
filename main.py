@@ -12,7 +12,7 @@ BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
 CATEGORY_ID = 14
 # ===============================
 
-# Список валидных номеров ТС (10 штук)
+# Список валидных номеров ТС
 VALID_CARS = {
     "Т731ХО797": "Belgee X50",
     "Е330ХТ797": "Belgee X50",
@@ -52,7 +52,7 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
         r = await client.post(f"{base}/crm.contact.add.json", json=contact_data, timeout=30)
         cid = r.json().get("result")
         if not cid:
-            print("Ошибка контакта")
+            print("❌ Не удалось создать контакт")
             return
         deal_data = {
             "fields": {
@@ -65,7 +65,7 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
             }
         }
         await client.post(f"{base}/crm.deal.add.json", json=deal_data, timeout=30)
-        print("Сделка создана")
+        print("✅ Сделка создана")
 
 # ========== БОТ ==========
 @dp.bot_started()
