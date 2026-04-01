@@ -12,7 +12,7 @@ BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
 CATEGORY_ID = 14
 # ===============================
 
-# Список валидных номеров ТС
+# Список валидных номеров ТС (номер -> марка)
 VALID_CARS = {
     "Т731ХО797": "Belgee X50",
     "Е330ХТ797": "Belgee X50",
@@ -111,7 +111,7 @@ async def handle(event):
         if phone_clean.startswith(("+7", "8")):
             user_data[uid]["phone"] = text
             user_data[uid]["step"] = "name"
-            await event.message.answer("📝 Введите ФИО")
+            await event.message.answer("📝 Введите ваше ФИО")
         else:
             await event.message.answer("❌ Неверный формат. Пример: +7 999 123-45-67")
         return
@@ -132,7 +132,7 @@ async def handle(event):
             user_data[uid]["car_number"] = car_number
             user_data[uid]["car_model"] = car_model
             await event.message.answer(
-                f"📋 Данные:\n📞 {user_data[uid]['phone']}\n👤 {user_data[uid]['name']}\n🚗 {car_number} ({car_model})\n\n✅ СОГЛАСЕН\n🔙 НАЗАД"
+                f"📋 Проверьте данные:\n📞 {user_data[uid]['phone']}\n👤 {user_data[uid]['name']}\n🚗 {car_number} ({car_model})\n\n✅ Если всё верно, напишите: СОГЛАСЕН\n🔙 Или НАЗАД, чтобы исправить"
             )
             user_data[uid]["step"] = "final"
         else:
