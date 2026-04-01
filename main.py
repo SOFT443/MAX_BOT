@@ -8,7 +8,7 @@ from maxapi.types import BotStarted, MessageCreated
 # ========== НАСТРОЙКИ ==========
 TOKEN = "f9LHodD0cOJPSQFyzeHjlwhPa8rjFBDzIdnz8GwLy-sWU105dTWg3LE_hT5NkX9Apo6mGxA89YHT9G3xOnWx"
 BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/bj7vi1r4oew89t64/"
-CATEGORY_ID = 14  # ← ЗАМЕНИ НА ID ТВОЕЙ ВОРОНКИ
+CATEGORY_ID = 14  # ← твой ID воронки
 # ===============================
 
 bot = Bot(TOKEN)
@@ -18,11 +18,10 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 user_data = {}
 
-# ========== ФОНОВЫЙ ПИНГ (чтобы Render не усыплял) ==========
+# ========== ФОНОВЫЙ ПИНГ ==========
 async def keep_alive():
-    """Раз в 10 минут пингует свой эндпоинт /health"""
     while True:
-        await asyncio.sleep(600)  # 10 минут
+        await asyncio.sleep(600)
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("http://localhost:8000/health")
@@ -32,7 +31,6 @@ async def keep_alive():
 
 # ========== ОТПРАВКА В БИТРИКС24 ==========
 async def send_to_bitrix24(phone: str, name: str, car_number: str):
-    """Создаёт контакт и сделку в Битрикс24 в указанной воронке"""
     base_url = BITRIX_WEBHOOK
 
     contact_data = {
@@ -43,7 +41,6 @@ async def send_to_bitrix24(phone: str, name: str, car_number: str):
     }
 
     async with httpx.AsyncClient() as client:
-        # Создаём контакт
         contact_response = await client.post(
             f"{base_url}crm.contact.add.json",
             json=contact_data,
@@ -58,14 +55,13 @@ async def send_to_bitrix24(phone: str, name: str, car_number: str):
 
         print(f"✅ Контакт создан, ID: {contact_id}")
 
-        # Создаём сделку в нужной воронке
         deal_data = {
             "fields": {
                 "TITLE": f"Заявка на бронирование от {name}",
                 "STAGE_ID": "NEW",
-                "CATEGORY_ID": CATEGORY_ID, 
+                "CATEGORY_ID": CATEGORY_ID,
                 "ASSIGNED_BY_ID": 1,
-                "CONTACT_ID": contact_id, 
+                "CONTACT_ID": contact_id,
                 "COMMENTS": f"Номер ТС: {car_number}"
             }
         }
@@ -79,7 +75,7 @@ async def send_to_bitrix24(phone: str, name: str, car_number: str):
         print(f"✅ Статус сделки: {deal_response.status_code}")
         print(f"📦 Ответ: {deal_response.text}")
 
-# ========== ОБРАБОТЧИКИ СООБЩЕНИЙ ==========
+# ========== ОБРАБОТЧИК СООБЩЕНИЙ ==========
 @dp.bot_started()
 async def on_start(event: BotStarted):
     await event.bot.send_message(
@@ -202,7 +198,6 @@ async def health():
 async def main():
     await bot.delete_webhook()
     print("Вебхук удалён, запускаем polling...")
-    # Запускаем фоновый пинг
     asyncio.create_task(keep_alive())
     await dp.start_polling(bot)
 
