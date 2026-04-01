@@ -7,8 +7,8 @@ from maxapi.types import BotStarted, MessageCreated
 
 # ========== НАСТРОЙКИ ==========
 TOKEN = "f9LHodD0cOJPSQFyzeHjlwhPa8rjFBDzIdnz8GwLy-sWU105dTWg3LE_hT5NkX9Apo6mGxA89YHT9G3xOnWx"
-BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/bj7vi1r4oew89t64/"
-CATEGORY_ID = 14  # ← твой ID воронки
+BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"  # ← без слеша в конце!
+CATEGORY_ID = 14  # ← замени на ID твоей воронки
 # ===============================
 
 bot = Bot(TOKEN)
@@ -18,10 +18,11 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 user_data = {}
 
-# ========== ФОНОВЫЙ ПИНГ ==========
+# ========== ФОНОВЫЙ ПИНГ (чтобы Render не усыплял) ==========
 async def keep_alive():
+    """Раз в 10 минут пингует свой эндпоинт /health"""
     while True:
-        await asyncio.sleep(600)
+        await asyncio.sleep(600)  # 10 минут
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("http://localhost:8000/health")
@@ -31,8 +32,10 @@ async def keep_alive():
 
 # ========== ОТПРАВКА В БИТРИКС24 ==========
 async def send_to_bitrix24(phone: str, name: str, car_number: str):
+    """Создаёт контакт и сделку в Битрикс24 в указанной воронке"""
     base_url = BITRIX_WEBHOOK
 
+    # Шаг 1: Создаём контакт
     contact_data = {
         "fields": {
             "NAME": name,
@@ -42,7 +45,7 @@ async def send_to_bitrix24(phone: str, name: str, car_number: str):
 
     async with httpx.AsyncClient() as client:
         contact_response = await client.post(
-            f"{base_url}crm.contact.add.json",
+            f"{base_url}/crm.contact.add.json",
             json=contact_data,
             timeout=10
         )
@@ -55,6 +58,7 @@ async def send_to_bitrix24(phone: str, name: str, car_number: str):
 
         print(f"✅ Контакт создан, ID: {contact_id}")
 
+        # Шаг 2: Создаём сделку в нужной воронке
         deal_data = {
             "fields": {
                 "TITLE": f"Заявка на бронирование от {name}",
@@ -67,7 +71,7 @@ async def send_to_bitrix24(phone: str, name: str, car_number: str):
         }
 
         deal_response = await client.post(
-            f"{base_url}crm.deal.add.json",
+            f"{base_url}/crm.deal.add.json",
             json=deal_data,
             timeout=10
         )
@@ -75,7 +79,7 @@ async def send_to_bitrix24(phone: str, name: str, car_number: str):
         print(f"✅ Статус сделки: {deal_response.status_code}")
         print(f"📦 Ответ: {deal_response.text}")
 
-# ========== ОБРАБОТЧИК СООБЩЕНИЙ ==========
+# ========== ОБРАБОТЧИКИ СООБЩЕНИЙ ==========
 @dp.bot_started()
 async def on_start(event: BotStarted):
     await event.bot.send_message(
