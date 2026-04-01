@@ -7,7 +7,7 @@ from maxapi import Bot, Dispatcher
 from maxapi.types import BotStarted, MessageCreated
 
 # ========== НАСТРОЙКИ ==========
-TOKEN = "f9LHodD0cOJPSQFyzeHjlwhPa8rjFBDzIdnz8GwLy-sWU105dTWg3LE_hT5NkX9Apo6mGxA89YHT9G3xOnWx"
+TOKEN = "f9LHodD0cOJYcBrUhdAkWfRzKqK57mFf5SExUIZIHXqG0PoiAgzYBDoEEOb2gBsW7OkfIOrxCdUu-J-BhcxK"
 BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
 CATEGORY_ID = 14
 # ===============================
