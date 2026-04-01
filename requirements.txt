@@ -1,0 +1,4 @@
+maxapi[webhook]
+httpx
+fastapi
+uvicorn
