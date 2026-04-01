@@ -7,8 +7,8 @@ from maxapi.types import BotStarted, MessageCreated
 
 # ========== НАСТРОЙКИ ==========
 TOKEN = "f9LHodD0cOJPSQFyzeHjlwhPa8rjFBDzIdnz8GwLy-sWU105dTWg3LE_hT5NkX9Apo6mGxA89YHT9G3xOnWx"
-BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"  # ← без слеша в конце!
-CATEGORY_ID = 14  # ← замени на ID твоей воронки
+BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"  # без слеша в конце
+CATEGORY_ID = 14  # замени на ID твоей воронки
 # ===============================
 
 bot = Bot(TOKEN)
@@ -18,11 +18,10 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 user_data = {}
 
-# ========== ФОНОВЫЙ ПИНГ (чтобы Render не усыплял) ==========
+# ========== ФОНОВЫЙ ПИНГ ==========
 async def keep_alive():
-    """Раз в 10 минут пингует свой эндпоинт /health"""
     while True:
-        await asyncio.sleep(600)  # 10 минут
+        await asyncio.sleep(600)
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("http://localhost:8000/health")
@@ -32,10 +31,8 @@ async def keep_alive():
 
 # ========== ОТПРАВКА В БИТРИКС24 ==========
 async def send_to_bitrix24(phone: str, name: str, car_number: str):
-    """Создаёт контакт и сделку в Битрикс24 в указанной воронке"""
     base_url = BITRIX_WEBHOOK
 
-    # Шаг 1: Создаём контакт
     contact_data = {
         "fields": {
             "NAME": name,
@@ -44,42 +41,49 @@ async def send_to_bitrix24(phone: str, name: str, car_number: str):
     }
 
     async with httpx.AsyncClient() as client:
-        contact_response = await client.post(
-            f"{base_url}/crm.contact.add.json",
-            json=contact_data,
-            timeout=10
-        )
-        contact_result = contact_response.json()
-        contact_id = contact_result.get("result")
+        try:
+            # Создаём контакт
+            contact_response = await client.post(
+                f"{base_url}/crm.contact.add.json",
+                json=contact_data,
+                timeout=30
+            )
+            contact_result = contact_response.json()
+            contact_id = contact_result.get("result")
 
-        if not contact_id:
-            print(f"❌ Не удалось создать контакт: {contact_response.text}")
-            return
+            if not contact_id:
+                print(f"❌ Не удалось создать контакт: {contact_response.text}")
+                return
 
-        print(f"✅ Контакт создан, ID: {contact_id}")
+            print(f"✅ Контакт создан, ID: {contact_id}")
 
-        # Шаг 2: Создаём сделку в нужной воронке
-        deal_data = {
-            "fields": {
-                "TITLE": f"Заявка на бронирование от {name}",
-                "STAGE_ID": "NEW",
-                "CATEGORY_ID": CATEGORY_ID,
-                "ASSIGNED_BY_ID": 1,
-                "CONTACT_ID": contact_id,
-                "COMMENTS": f"Номер ТС: {car_number}"
+            # Создаём сделку
+            deal_data = {
+                "fields": {
+                    "TITLE": f"Заявка на бронирование от {name}",
+                    "STAGE_ID": "NEW",
+                    "CATEGORY_ID": CATEGORY_ID,
+                    "ASSIGNED_BY_ID": 1,
+                    "CONTACT_ID": contact_id,
+                    "COMMENTS": f"Номер ТС: {car_number}"
+                }
             }
-        }
 
-        deal_response = await client.post(
-            f"{base_url}/crm.deal.add.json",
-            json=deal_data,
-            timeout=10
-        )
+            deal_response = await client.post(
+                f"{base_url}/crm.deal.add.json",
+                json=deal_data,
+                timeout=30
+            )
 
-        print(f"✅ Статус сделки: {deal_response.status_code}")
-        print(f"📦 Ответ: {deal_response.text}")
+            print(f"✅ Статус сделки: {deal_response.status_code}")
+            print(f"📦 Ответ: {deal_response.text}")
 
-# ========== ОБРАБОТЧИКИ СООБЩЕНИЙ ==========
+        except httpx.TimeoutException:
+            print("❌ Таймаут при отправке в Битрикс24")
+        except Exception as e:
+            print(f"❌ Ошибка: {e}")
+
+# ========== ОБРАБОТЧИКИ ==========
 @dp.bot_started()
 async def on_start(event: BotStarted):
     await event.bot.send_message(
