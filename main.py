@@ -65,10 +65,7 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
 
 @dp.bot_started()
 async def on_start(event):
-    await event.bot.send_message(
-        chat_id=event.chat_id,
-        text="🚗 Здравствуйте! Это бот Драйвер.\n\nЯ помогу вам забронировать автомобиль. Для начала напишите /start"
-    )
+    await event.bot.send_message(chat_id=event.chat_id, text="Напишите /start")
 
 @dp.message_created()
 async def handle(event):
@@ -82,7 +79,11 @@ async def handle(event):
 
     if text == "/START":
         await event.message.answer(
-            "🚗 Введите номер телефона:\n+7 999 123-45-67\n🔙 НАЗАД"
+            "🚗 Здравствуйте! Это бот Драйвер.\n\n"
+            "Я помогу вам забронировать автомобиль.\n\n"
+            "Для начала введите номер телефона:\n"
+            "+7 999 123-45-67\n\n"
+            "🔙 НАЗАД"
         )
         user_data[uid] = {"step": "phone"}
         return
