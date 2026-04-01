@@ -65,7 +65,10 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
 
 @dp.bot_started()
 async def on_start(event):
-    await event.bot.send_message(chat_id=event.chat_id, text="Напиши /start")
+    await event.bot.send_message(
+        chat_id=event.chat_id,
+        text="🚗 Здравствуйте! Это бот Драйвер.\n\nЯ помогу вам забронировать автомобиль. Для начала напишите /start"
+    )
 
 @dp.message_created()
 async def handle(event):
