@@ -7,12 +7,12 @@ from maxapi import Bot, Dispatcher
 from maxapi.types import BotStarted, MessageCreated
 
 # ========== НАСТРОЙКИ ==========
-TOKEN = "f9LHodD0cOJPSQFyzeHjlwhPa8rjFBDzIdnz8GwLy-sWU105dTWg3LE_hT5NkX9Apo6mGxA89YHT9G3xOnWx"
+TOKEN = "СЮДА_НОВЫЙ_ТОКЕН_ИЗ_MAX_BUSINESS"
 BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
 CATEGORY_ID = 14
 # ===============================
 
-# Список валидных номеров ТС (номер -> марка)
+# Список валидных номеров ТС
 VALID_CARS = {
     "Т731ХО797": "Belgee X50",
     "Е330ХТ797": "Belgee X50",
@@ -34,7 +34,6 @@ logging.basicConfig(level=logging.INFO)
 user_data = {}
 processed = set()
 
-# ========== ПИНГ ==========
 async def keep_alive():
     while True:
         await asyncio.sleep(600)
@@ -44,7 +43,6 @@ async def keep_alive():
         except:
             pass
 
-# ========== БИТРИКС ==========
 async def send_to_bitrix24(phone, name, car_number, car_model):
     base = BITRIX_WEBHOOK
     contact_data = {"fields": {"NAME": name, "PHONE": [{"VALUE": phone}]}}
@@ -52,7 +50,6 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
         r = await client.post(f"{base}/crm.contact.add.json", json=contact_data, timeout=30)
         cid = r.json().get("result")
         if not cid:
-            print("❌ Не удалось создать контакт")
             return
         deal_data = {
             "fields": {
@@ -61,13 +58,11 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
                 "CATEGORY_ID": CATEGORY_ID,
                 "ASSIGNED_BY_ID": 1,
                 "CONTACT_ID": cid,
-                "COMMENTS": f"Номер ТС: {car_number}\nМарка/Модель: {car_model}"
+                "COMMENTS": f"Номер ТС: {car_number}\nМарка: {car_model}"
             }
         }
         await client.post(f"{base}/crm.deal.add.json", json=deal_data, timeout=30)
-        print("✅ Сделка создана")
 
-# ========== БОТ ==========
 @dp.bot_started()
 async def on_start(event):
     await event.bot.send_message(chat_id=event.chat_id, text="Напиши /start")
@@ -132,7 +127,7 @@ async def handle(event):
             user_data[uid]["car_number"] = car_number
             user_data[uid]["car_model"] = car_model
             await event.message.answer(
-                f"📋 Проверьте данные:\n📞 {user_data[uid]['phone']}\n👤 {user_data[uid]['name']}\n🚗 {car_number} ({car_model})\n\n✅ Если всё верно, напишите: СОГЛАСЕН\n🔙 Или НАЗАД, чтобы исправить"
+                f"📋 Проверьте данные:\n📞 {user_data[uid]['phone']}\n👤 {user_data[uid]['name']}\n🚗 {car_number} ({car_model})\n\n✅ СОГЛАСЕН\n🔙 НАЗАД"
             )
             user_data[uid]["step"] = "final"
         else:
@@ -157,7 +152,6 @@ async def root():
 async def health():
     return {"status": "ok"}
 
-# ========== ЗАПУСК ==========
 async def main():
     await bot.delete_webhook()
     asyncio.create_task(keep_alive())
