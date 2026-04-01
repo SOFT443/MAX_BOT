@@ -7,10 +7,24 @@ from maxapi import Bot, Dispatcher
 from maxapi.types import BotStarted, MessageCreated
 
 # ========== НАСТРОЙКИ ==========
-TOKEN = "f9LHodD0cOJYcBrUhdAkWfRzKqK57mFf5SExUIZIHXqG0PoiAgzYBDoEEOb2gBsW7OkfIOrxCdUu-J-BhcxK"
+TOKEN = "f9LHodD0cOJPSQFyzeHjlwhPa8rjFBDzIdnz8GwLy-sWU105dTWg3LE_hT5NkX9Apo6mGxA89YHT9G3xOnWx"
 BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
 CATEGORY_ID = 14
 # ===============================
+
+# Список валидных номеров ТС (10 штук)
+VALID_CARS = {
+    "Т731ХО797": "Belgee X50",
+    "Е330ХТ797": "Belgee X50",
+    "Е327ХС797": "Belgee X50",
+    "Т290ХВ797": "Belgee X50",
+    "Т218ХВ797": "Belgee X50",
+    "Т780ХК797": "Belgee X50",
+    "Т279ХВ797": "Belgee X50",
+    "Е335ХТ797": "Belgee X50",
+    "Т203ХР797": "Belgee X50",
+    "Т638ХА797": "Belgee X50",
+}
 
 bot = Bot(TOKEN)
 dp = Dispatcher()
@@ -31,7 +45,7 @@ async def keep_alive():
             pass
 
 # ========== БИТРИКС ==========
-async def send_to_bitrix24(phone, name, car_number):
+async def send_to_bitrix24(phone, name, car_number, car_model):
     base = BITRIX_WEBHOOK
     contact_data = {"fields": {"NAME": name, "PHONE": [{"VALUE": phone}]}}
     async with httpx.AsyncClient() as client:
@@ -47,7 +61,7 @@ async def send_to_bitrix24(phone, name, car_number):
                 "CATEGORY_ID": CATEGORY_ID,
                 "ASSIGNED_BY_ID": 1,
                 "CONTACT_ID": cid,
-                "COMMENTS": f"ТС: {car_number}"
+                "COMMENTS": f"Номер ТС: {car_number}\nМарка/Модель: {car_model}"
             }
         }
         await client.post(f"{base}/crm.deal.add.json", json=deal_data, timeout=30)
@@ -66,9 +80,9 @@ async def handle(event):
         return
     processed.add(msg_id)
 
-    text = event.message.body.text.strip().lower()
+    text = event.message.body.text.strip().upper()
 
-    if text == "/start":
+    if text == "/START":
         await event.message.answer(
             "🚗 Введите номер телефона:\n+7 999 123-45-67\n🔙 НАЗАД"
         )
@@ -80,7 +94,7 @@ async def handle(event):
 
     step = user_data[uid].get("step")
 
-    if text == "назад":
+    if text == "НАЗАД":
         if step == "name":
             user_data[uid]["step"] = "phone"
             await event.message.answer("📞 Введите телефон")
@@ -93,40 +107,45 @@ async def handle(event):
         return
 
     if step == "phone":
-        if text.replace(" ", "").replace("-", "").replace("(", "").replace(")", "").startswith(("+7", "8")):
+        phone_clean = text.replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
+        if phone_clean.startswith(("+7", "8")):
             user_data[uid]["phone"] = text
             user_data[uid]["step"] = "name"
             await event.message.answer("📝 Введите ФИО")
         else:
-            await event.message.answer("❌ Неверный формат")
+            await event.message.answer("❌ Неверный формат. Пример: +7 999 123-45-67")
         return
 
     if step == "name":
         if len(text.split()) >= 2:
             user_data[uid]["name"] = text
             user_data[uid]["step"] = "car_number"
-            await event.message.answer("🚗 Введите номер ТС")
+            await event.message.answer("🚗 Введите номер ТС (например: Т731ХО797)")
         else:
-            await event.message.answer("❌ Введите полное ФИО")
+            await event.message.answer("❌ Введите полное ФИО (минимум фамилия и имя)")
         return
 
     if step == "car_number":
-        if text.strip():
-            user_data[uid]["car_number"] = text
+        car_number = text.strip().upper()
+        if car_number in VALID_CARS:
+            car_model = VALID_CARS[car_number]
+            user_data[uid]["car_number"] = car_number
+            user_data[uid]["car_model"] = car_model
             await event.message.answer(
-                f"📋 Данные:\n📞 {user_data[uid]['phone']}\n👤 {user_data[uid]['name']}\n🚗 {text}\n\n✅ СОГЛАСЕН\n🔙 НАЗАД"
+                f"📋 Данные:\n📞 {user_data[uid]['phone']}\n👤 {user_data[uid]['name']}\n🚗 {car_number} ({car_model})\n\n✅ СОГЛАСЕН\n🔙 НАЗАД"
             )
             user_data[uid]["step"] = "final"
         else:
-            await event.message.answer("❌ Введите номер ТС")
+            await event.message.answer("❌ Неверный номер ТС. Попробуйте снова:\n🚗 Введите номер ТС (например: Т731ХО797)")
         return
 
-    if step == "final" and text == "согласен":
+    if step == "final" and text == "СОГЛАСЕН":
         await event.message.answer(f"✅ Заявка отправлена!")
         await send_to_bitrix24(
             user_data[uid]['phone'],
             user_data[uid]['name'],
-            user_data[uid]['car_number']
+            user_data[uid]['car_number'],
+            user_data[uid]['car_model']
         )
         del user_data[uid]
 
