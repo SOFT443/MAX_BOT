@@ -10,6 +10,7 @@ from maxapi.types import BotStarted, MessageCreated
 TOKEN = "f9LHodD0cOJYcBrUhdAkWfRzKqK57mFf5SExUIZIHXqG0PoiAgzYBDoEEOb2gBsW7OkfIOrxCdUu-J-BhcxK"
 BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
 CATEGORY_ID = 14
+RENDER_URL = "https://max-booking-bot-1.onrender.com"  # ВАШ URL НА RENDER
 # ===============================
 
 # ========== ВСЕ АВТОМОБИЛИ ИЗ EXCEL ==========
@@ -832,15 +833,23 @@ logging.basicConfig(level=logging.INFO)
 user_data = {}
 processed = set()
 
+# ========== ФУНКЦИЯ ДЛЯ ПИНГОВ (НЕ ДАЁТ УСНУТЬ) ==========
 async def keep_alive():
+    """Пингуем себя через внешний URL каждые 4 минуты, чтобы Render не усыплял бота"""
     while True:
-        await asyncio.sleep(600)
+        await asyncio.sleep(240)  # 240 секунд = 4 минуты
         try:
-            async with httpx.AsyncClient() as client:
-                await client.get("http://localhost:8000/health")
-        except:
-            pass
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                # Пингуем через внешний URL (ВАЖНО: не localhost!)
+                response = await client.get(f"{RENDER_URL}/ping")
+                logging.info(f"Ping sent at {asyncio.get_event_loop().time()}, status: {response.status_code}")
+                
+                # Дополнительно пингуем health
+                await client.get(f"{RENDER_URL}/health")
+        except Exception as e:
+            logging.error(f"Ping failed: {e}")
 
+# ========== ОТПРАВКА В БИТРИКС24 ==========
 async def send_to_bitrix24(phone, name, car_number, car_model):
     base = BITRIX_WEBHOOK
     contact_data = {"fields": {"NAME": name, "PHONE": [{"VALUE": phone}]}}
@@ -861,6 +870,7 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
         }
         await client.post(f"{base}/crm.deal.add.json", json=deal_data, timeout=30)
 
+# ========== ОБРАБОТЧИКИ СОБЫТИЙ MAX ==========
 @dp.bot_started()
 async def on_start(event):
     await event.bot.send_message(chat_id=event.chat_id, text="Напишите /start")
@@ -946,18 +956,26 @@ async def handle(event):
         )
         del user_data[uid]
 
+# ========== ЭНДПОИНТЫ ДЛЯ ПИНГОВ ==========
 @app.get("/")
 async def root():
-    return {"status": "ok"}
+    return {"status": "ok", "message": "Bot is running"}
+
+@app.get("/ping")
+async def ping():
+    """Эндпоинт для внешних пингов (cron-job.org и keep_alive)"""
+    return {"status": "alive", "timestamp": asyncio.get_event_loop().time()}
 
 @app.get("/health")
 async def health():
-    return {"status": "ok"}
+    """Эндпоинт для проверки здоровья"""
+    return {"status": "ok", "bot_running": True}
 
+# ========== ЗАПУСК БОТА ==========
 async def main():
-    await bot.delete_webhook()
-    asyncio.create_task(keep_alive())
+    await bot.delete_webhook()  # Удаляем вебхук, работаем через polling
+    asyncio.create_task(keep_alive())  # Запускаем пинги в фоне
     await dp.start_polling(bot)
 
 threading.Thread(target=lambda: asyncio.run(main()), daemon=True).start()
-print("Бот запущен")
+print("🚀 Бот запущен и не будет засыпать!")
