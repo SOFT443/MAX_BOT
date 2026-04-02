@@ -13,9 +13,8 @@ CATEGORY_ID = 14
 RENDER_URL = "https://max-booking-bot-1.onrender.com"
 # ===============================
 
-# ========== ВСЕ АВТОМОБИЛИ (УНИКАЛЬНЫЕ) ==========
+# ========== ВСЕ АВТОМОБИЛИ ==========
 VALID_CARS = {
-    # Belgee X50
     "Т731ХО797": "Belgee X50", "Е330ХТ797": "Belgee X50", "Е327ХС797": "Belgee X50",
     "Т290ХВ797": "Belgee X50", "Т218ХВ797": "Belgee X50", "Т780ХК797": "Belgee X50",
     "Т279ХВ797": "Belgee X50", "Е335ХТ797": "Belgee X50", "Т203ХР797": "Belgee X50",
@@ -32,58 +31,50 @@ VALID_CARS = {
     "Е346ХС797": "Belgee X50", "Т219ХВ797": "Belgee X50", "Т245ХМ797": "Belgee X50",
     "Т757ХК797": "Belgee X50", "Т228ХВ797": "Belgee X50", "Т236ХВ797": "Belgee X50",
     "Т245ХВ797": "Belgee X50", "Т266ХВ797": "Belgee X50", "Е331ХС797": "Belgee X50",
-    "Е375ХТ797": "Belgee X50", "Т212ХР797": "Belgee X50",
-    # Chery Arrizo 8
-    "О615РН797": "Chery Arrizo 8", "Е036ОК797": "Chery Arrizo 8", "О919РН797": "Chery Arrizo 8",
-    "О921РН797": "Chery Arrizo 8", "О884РН797": "Chery Arrizo 8", "Х069РР797": "Chery Arrizo 8",
-    "О905РН797": "Chery Arrizo 8", "О469РН797": "Chery Arrizo 8",
-    # Chery Tiggo 4
-    "Е488НН797": "Chery Tiggo 4", "К012НР797": "Chery Tiggo 4", "К676НТ797": "Chery Tiggo 4",
-    "Е981НУ797": "Chery Tiggo 4", "Х990НС797": "Chery Tiggo 4", "Е479НН797": "Chery Tiggo 4",
-    "К042НР797": "Chery Tiggo 4", "Х187НН797": "Chery Tiggo 4", "Е984НУ797": "Chery Tiggo 4",
-    # Chery Tiggo 7 Pro
-    "М969МВ797": "Chery Tiggo 7 Pro", "Е546ОМ797": "Chery Tiggo 7 Pro", "Е797ОК797": "Chery Tiggo 7 Pro",
-    "М979МВ797": "Chery Tiggo 7 Pro", "Е472ОМ797": "Chery Tiggo 7 Pro", "ЕВ07899": "Chery Tiggo 7 Pro",
-    "Т727ОМ797": "Chery Tiggo 7 Pro", "Т166ОЕ797": "Chery Tiggo 7 Pro", "К486МХ797": "Chery Tiggo 7 Pro",
-    "К541МХ797": "Chery Tiggo 7 Pro", "М995МВ797": "Chery Tiggo 7 Pro", "ЕВ07499": "Chery Tiggo 7 Pro",
-    "Т717ОМ797": "Chery Tiggo 7 Pro", "Е553ОМ797": "Chery Tiggo 7 Pro", "Е056ОН797": "Chery Tiggo 7 Pro",
-    "Е202ОС797": "Chery Tiggo 7 Pro", "ЕВ07399": "Chery Tiggo 7 Pro", "Т220ОЕ797": "Chery Tiggo 7 Pro",
-    "Т704ОМ797": "Chery Tiggo 7 Pro", "Е542ОМ797": "Chery Tiggo 7 Pro", "ЕВ07299": "Chery Tiggo 7 Pro",
-    "Т216ОЕ797": "Chery Tiggo 7 Pro", "Т237ОЕ797": "Chery Tiggo 7 Pro", "ЕВ07599": "Chery Tiggo 7 Pro",
-    "Е677ОР797": "Chery Tiggo 7 Pro", "Е548ОМ797": "Chery Tiggo 7 Pro", "Е493ОМ797": "Chery Tiggo 7 Pro",
-    "Е490ОМ797": "Chery Tiggo 7 Pro", "ЕВ07799": "Chery Tiggo 7 Pro", "М035МА797": "Chery Tiggo 7 Pro",
-    "Е800ОК797": "Chery Tiggo 7 Pro", "Е522ОМ797": "Chery Tiggo 7 Pro", "ЕВ07999": "Chery Tiggo 7 Pro",
-    "К543МХ797": "Chery Tiggo 7 Pro", "Е531ОМ797": "Chery Tiggo 7 Pro", "К508МХ797": "Chery Tiggo 7 Pro",
-    "ЕВ07199": "Chery Tiggo 7 Pro", "ЕВ08099": "Chery Tiggo 7 Pro", "К544МХ797": "Chery Tiggo 7 Pro",
-    "Е547ОМ797": "Chery Tiggo 7 Pro", "Е802ОК797": "Chery Tiggo 7 Pro", "Е686ОР797": "Chery Tiggo 7 Pro",
-    "Е494ОМ797": "Chery Tiggo 7 Pro", "Е133ОН797": "Chery Tiggo 7 Pro", "К518МХ797": "Chery Tiggo 7 Pro",
-    "ЕВ07699": "Chery Tiggo 7 Pro", "Е664ОР797": "Chery Tiggo 7 Pro",
-    # Chery Tiggo 7 Pro Max
-    "Е059ОН797": "Chery Tiggo 7 Pro Max", "Е550ОМ797": "Chery Tiggo 7 Pro Max", "Е057ОН797": "Chery Tiggo 7 Pro Max",
-    "Е650ОР797": "Chery Tiggo 7 Pro Max", "Е198ОС797": "Chery Tiggo 7 Pro Max", "Е672ОР797": "Chery Tiggo 7 Pro Max",
-    "Е687ОР797": "Chery Tiggo 7 Pro Max", "Е076ОН797": "Chery Tiggo 7 Pro Max", "Е145ОС797": "Chery Tiggo 7 Pro Max",
-    "Е186ОС797": "Chery Tiggo 7 Pro Max",
-    # EVOLUTE i-PRO
+    "Е375ХТ797": "Belgee X50", "Т212ХР797": "Belgee X50", "О615РН797": "Chery Arrizo 8",
+    "Е036ОК797": "Chery Arrizo 8", "О919РН797": "Chery Arrizo 8", "О921РН797": "Chery Arrizo 8",
+    "О884РН797": "Chery Arrizo 8", "Х069РР797": "Chery Arrizo 8", "О905РН797": "Chery Arrizo 8",
+    "О469РН797": "Chery Arrizo 8", "Е488НН797": "Chery Tiggo 4", "К012НР797": "Chery Tiggo 4",
+    "К676НТ797": "Chery Tiggo 4", "Е981НУ797": "Chery Tiggo 4", "Х990НС797": "Chery Tiggo 4",
+    "Е479НН797": "Chery Tiggo 4", "К042НР797": "Chery Tiggo 4", "Х187НН797": "Chery Tiggo 4",
+    "Е984НУ797": "Chery Tiggo 4", "М969МВ797": "Chery Tiggo 7 Pro", "Е546ОМ797": "Chery Tiggo 7 Pro",
+    "Е797ОК797": "Chery Tiggo 7 Pro", "М979МВ797": "Chery Tiggo 7 Pro", "Е472ОМ797": "Chery Tiggo 7 Pro",
+    "ЕВ07899": "Chery Tiggo 7 Pro", "Т727ОМ797": "Chery Tiggo 7 Pro", "Т166ОЕ797": "Chery Tiggo 7 Pro",
+    "К486МХ797": "Chery Tiggo 7 Pro", "К541МХ797": "Chery Tiggo 7 Pro", "М995МВ797": "Chery Tiggo 7 Pro",
+    "ЕВ07499": "Chery Tiggo 7 Pro", "Т717ОМ797": "Chery Tiggo 7 Pro", "Е553ОМ797": "Chery Tiggo 7 Pro",
+    "Е056ОН797": "Chery Tiggo 7 Pro", "Е202ОС797": "Chery Tiggo 7 Pro", "ЕВ07399": "Chery Tiggo 7 Pro",
+    "Т220ОЕ797": "Chery Tiggo 7 Pro", "Т704ОМ797": "Chery Tiggo 7 Pro", "Е542ОМ797": "Chery Tiggo 7 Pro",
+    "ЕВ07299": "Chery Tiggo 7 Pro", "Т216ОЕ797": "Chery Tiggo 7 Pro", "Т237ОЕ797": "Chery Tiggo 7 Pro",
+    "ЕВ07599": "Chery Tiggo 7 Pro", "Е677ОР797": "Chery Tiggo 7 Pro", "Е548ОМ797": "Chery Tiggo 7 Pro",
+    "Е493ОМ797": "Chery Tiggo 7 Pro", "Е490ОМ797": "Chery Tiggo 7 Pro", "ЕВ07799": "Chery Tiggo 7 Pro",
+    "М035МА797": "Chery Tiggo 7 Pro", "Е800ОК797": "Chery Tiggo 7 Pro", "Е522ОМ797": "Chery Tiggo 7 Pro",
+    "ЕВ07999": "Chery Tiggo 7 Pro", "К543МХ797": "Chery Tiggo 7 Pro", "Е531ОМ797": "Chery Tiggo 7 Pro",
+    "К508МХ797": "Chery Tiggo 7 Pro", "ЕВ07199": "Chery Tiggo 7 Pro", "ЕВ08099": "Chery Tiggo 7 Pro",
+    "К544МХ797": "Chery Tiggo 7 Pro", "Е547ОМ797": "Chery Tiggo 7 Pro", "Е802ОК797": "Chery Tiggo 7 Pro",
+    "Е686ОР797": "Chery Tiggo 7 Pro", "Е494ОМ797": "Chery Tiggo 7 Pro", "Е133ОН797": "Chery Tiggo 7 Pro",
+    "К518МХ797": "Chery Tiggo 7 Pro", "ЕВ07699": "Chery Tiggo 7 Pro", "Е664ОР797": "Chery Tiggo 7 Pro",
+    "Е059ОН797": "Chery Tiggo 7 Pro Max", "Е550ОМ797": "Chery Tiggo 7 Pro Max",
+    "Е057ОН797": "Chery Tiggo 7 Pro Max", "Е650ОР797": "Chery Tiggo 7 Pro Max",
+    "Е198ОС797": "Chery Tiggo 7 Pro Max", "Е672ОР797": "Chery Tiggo 7 Pro Max",
+    "Е687ОР797": "Chery Tiggo 7 Pro Max", "Е076ОН797": "Chery Tiggo 7 Pro Max",
+    "Е145ОС797": "Chery Tiggo 7 Pro Max", "Е186ОС797": "Chery Tiggo 7 Pro Max",
     "Х960РЕ797": "EVOLUTE i-PRO", "Х409РО797": "EVOLUTE i-PRO", "Х918РН797": "EVOLUTE i-PRO",
-    "Х456РО797": "EVOLUTE i-PRO", "Х393РО797": "EVOLUTE i-PRO",
-    # FAW Bestune B70
-    "О085УМ797": "FAW Bestune B70", "А455ХВ797": "FAW Bestune B70", "О636УО797": "FAW Bestune B70",
-    "С128УА797": "FAW Bestune B70", "А597ТО797": "FAW Bestune B70", "С072УЕ797": "FAW Bestune B70",
-    "С348УМ797": "FAW Bestune B70", "А460СА797": "FAW Bestune B70", "А371ХС797": "FAW Bestune B70",
-    "А371ТТ797": "FAW Bestune B70", "А370ТМ797": "FAW Bestune B70", "Х500УЕ797": "FAW Bestune B70",
-    "Х528УЕ797": "FAW Bestune B70", "А505СС797": "FAW Bestune B70", "А549ТК797": "FAW Bestune B70",
-    "А509ХМ797": "FAW Bestune B70", "С925УО797": "FAW Bestune B70", "С478УР797": "FAW Bestune B70",
-    "А374ТС797": "FAW Bestune B70", "С079УЕ797": "FAW Bestune B70", "А595ХМ797": "FAW Bestune B70",
-    "Х499УЕ797": "FAW Bestune B70", "А459ХЕ797": "FAW Bestune B70", "А460ТА797": "FAW Bestune B70",
-    "А549ТН797": "FAW Bestune B70", "А596СХ797": "FAW Bestune B70", "Х465УЕ797": "FAW Bestune B70",
-    "О125УМ797": "FAW Bestune B70", "А596ТМ797": "FAW Bestune B70", "А508ХЕ797": "FAW Bestune B70",
-    "С940УО797": "FAW Bestune B70", "О644УО797": "FAW Bestune B70", "К761УУ797": "FAW Bestune B70",
-    "А507ХМ797": "FAW Bestune B70", "А457ТУ797": "FAW Bestune B70", "Х546УЕ797": "FAW Bestune B70",
-    "А551ТУ797": "FAW Bestune B70", "С889УО797": "FAW Bestune B70", "А593СА797": "FAW Bestune B70",
-    "К791УУ797": "FAW Bestune B70", "А551ТА797": "FAW Bestune B70", "А368ТТ797": "FAW Bestune B70",
-    "А550СР797": "FAW Bestune B70", "К801УУ797": "FAW Bestune B70", "О090УМ797": "FAW Bestune B70",
-    "Р321УУ797": "FAW Bestune B70",
-    # Geely Atlas Pro
+    "Х456РО797": "EVOLUTE i-PRO", "Х393РО797": "EVOLUTE i-PRO", "О085УМ797": "FAW Bestune B70",
+    "А455ХВ797": "FAW Bestune B70", "О636УО797": "FAW Bestune B70", "С128УА797": "FAW Bestune B70",
+    "А597ТО797": "FAW Bestune B70", "С072УЕ797": "FAW Bestune B70", "С348УМ797": "FAW Bestune B70",
+    "А460СА797": "FAW Bestune B70", "А371ХС797": "FAW Bestune B70", "А371ТТ797": "FAW Bestune B70",
+    "А370ТМ797": "FAW Bestune B70", "Х500УЕ797": "FAW Bestune B70", "Х528УЕ797": "FAW Bestune B70",
+    "А505СС797": "FAW Bestune B70", "А549ТК797": "FAW Bestune B70", "А509ХМ797": "FAW Bestune B70",
+    "С925УО797": "FAW Bestune B70", "С478УР797": "FAW Bestune B70", "А374ТС797": "FAW Bestune B70",
+    "С079УЕ797": "FAW Bestune B70", "А595ХМ797": "FAW Bestune B70", "Х499УЕ797": "FAW Bestune B70",
+    "А459ХЕ797": "FAW Bestune B70", "А460ТА797": "FAW Bestune B70", "А549ТН797": "FAW Bestune B70",
+    "А596СХ797": "FAW Bestune B70", "Х465УЕ797": "FAW Bestune B70", "О125УМ797": "FAW Bestune B70",
+    "А596ТМ797": "FAW Bestune B70", "А508ХЕ797": "FAW Bestune B70", "С940УО797": "FAW Bestune B70",
+    "О644УО797": "FAW Bestune B70", "К761УУ797": "FAW Bestune B70", "А507ХМ797": "FAW Bestune B70",
+    "А457ТУ797": "FAW Bestune B70", "Х546УЕ797": "FAW Bestune B70", "А551ТУ797": "FAW Bestune B70",
+    "С889УО797": "FAW Bestune B70", "А593СА797": "FAW Bestune B70", "К791УУ797": "FAW Bestune B70",
+    "А551ТА797": "FAW Bestune B70", "А368ТТ797": "FAW Bestune B70", "А550СР797": "FAW Bestune B70",
+    "К801УУ797": "FAW Bestune B70", "О090УМ797": "FAW Bestune B70", "Р321УУ797": "FAW Bestune B70",
     "Х185РМ797": "Geely Atlas Pro", "М130ОУ797": "Geely Atlas Pro", "С096РВ797": "Geely Atlas Pro",
     "С031РВ797": "Geely Atlas Pro", "Х196РМ797": "Geely Atlas Pro", "Х700РК797": "Geely Atlas Pro",
     "Х716РО797": "Geely Atlas Pro", "С033РВ797": "Geely Atlas Pro", "ЕА88799": "Geely Atlas Pro",
@@ -104,13 +95,11 @@ VALID_CARS = {
     "М138ОУ797": "Geely Atlas Pro", "Х150РА797": "Geely Atlas Pro", "Х160РА797": "Geely Atlas Pro",
     "С590РК797": "Geely Atlas Pro", "К119ОК797": "Geely Atlas Pro", "ЕА88599": "Geely Atlas Pro",
     "М155ОУ797": "Geely Atlas Pro", "Х694РК797": "Geely Atlas Pro", "Х152РА797": "Geely Atlas Pro",
-    # Haval F7
     "Х116ОМ797": "Haval F7", "М850ОТ797": "Haval F7", "Х603ОО797": "Haval F7", "Х154ОМ797": "Haval F7",
     "Х144ОМ797": "Haval F7", "М927ОТ797": "Haval F7", "Х504ОА797": "Haval F7", "М914ОТ797": "Haval F7",
     "Х662ОО797": "Haval F7", "Х546ОА797": "Haval F7", "Х097ОМ797": "Haval F7", "М925ОТ797": "Haval F7",
     "М852ОТ797": "Haval F7", "М371ОР797": "Haval F7", "Х560ОА797": "Haval F7", "М870ОТ797": "Haval F7",
     "М379ОР797": "Haval F7", "Х076ОМ797": "Haval F7", "Х124ОМ797": "Haval F7", "Х580ОК797": "Haval F7",
-    # Haval Jolion
     "У367УР797": "Haval Jolion", "Т597ОР797": "Haval Jolion", "Х562УС797": "Haval Jolion",
     "Х537УС797": "Haval Jolion", "У914УО797": "Haval Jolion", "У480РК797": "Haval Jolion",
     "У363УР797": "Haval Jolion", "Т098ОС797": "Haval Jolion", "У519РО797": "Haval Jolion",
@@ -143,10 +132,8 @@ VALID_CARS = {
     "Х142РВ797": "Haval Jolion", "У399УХ797": "Haval Jolion", "У503РО797": "Haval Jolion",
     "У848УО797": "Haval Jolion", "У314УМ797": "Haval Jolion", "Х101РВ797": "Haval Jolion",
     "У829УО797": "Haval Jolion", "У161РУ797": "Haval Jolion", "Т017ОН797": "Haval Jolion",
-    # Hongqi H5
     "А558ХА797": "Hongqi H5", "А554ТС797": "Hongqi H5", "А558СА797": "Hongqi H5",
     "А558ТЕ797": "Hongqi H5", "А557ХР797": "Hongqi H5", "А052ТС797": "Hongqi H5",
-    # Kia K5
     "О448ЕТ797": "Kia K5", "К201ЕО797": "Kia K5", "Р845ЕТ797": "Kia K5", "Р873ЕТ797": "Kia K5",
     "У162ЕР797": "Kia K5", "М625ЕО797": "Kia K5", "У189ЕР797": "Kia K5", "У528ЕР797": "Kia K5",
     "У180ЕР797": "Kia K5", "Р834ЕТ797": "Kia K5", "К155ЕО797": "Kia K5", "Р859ЕТ797": "Kia K5",
@@ -157,11 +144,8 @@ VALID_CARS = {
     "У518ЕР797": "Kia K5", "К206ЕО797": "Kia K5", "К154ЕО797": "Kia K5", "У539ЕР797": "Kia K5",
     "У517ЕР797": "Kia K5", "У537ЕР797": "Kia K5", "М639ЕО797": "Kia K5", "М049ЕО797": "Kia K5",
     "К200ЕО797": "Kia K5", "У152ЕР797": "Kia K5", "Р881ЕТ797": "Kia K5", "О015ЕК797": "Kia K5",
-    "К159ЕО797": "Kia K5",
-    # Kia Optima
-    "К394АВ797": "Kia Optima", "К392АН797": "Kia Optima", "К390АТ797": "Kia Optima",
-    "К397АН797": "Kia Optima", "К395АН797": "Kia Optima",
-    # Kia Rio
+    "К159ЕО797": "Kia K5", "К394АВ797": "Kia Optima", "К392АН797": "Kia Optima",
+    "К390АТ797": "Kia Optima", "К397АН797": "Kia Optima", "К395АН797": "Kia Optima",
     "К355ЕС797": "Kia Rio", "Т102ЕС797": "Kia Rio", "Х218УХ799": "Kia Rio", "Х175УХ799": "Kia Rio",
     "Н365ЕТ797": "Kia Rio", "К316ЕС797": "Kia Rio", "Н287ЕТ797": "Kia Rio", "К807ЕЕ797": "Kia Rio",
     "ВК40199": "Kia Rio", "РК30377": "Kia Rio", "О621ЕТ797": "Kia Rio", "А068КУ797": "Kia Rio",
@@ -225,44 +209,36 @@ VALID_CARS = {
     "ВК42999": "Kia Rio", "К782ЕЕ797": "Kia Rio", "Т123ЕС797": "Kia Rio", "К934ЕМ797": "Kia Rio",
     "С029СР797": "Kia Rio", "А984ЕО797": "Kia Rio", "ВК38799": "Kia Rio", "РК30077": "Kia Rio",
     "К366ЕС797": "Kia Rio", "РК28577": "Kia Rio", "ВК45299": "Kia Rio", "Т066ЕС797": "Kia Rio",
-    "М151ЕТ797": "Kia Rio",
-    # Kia Rio Рест
-    "К349ЕА797": "Kia Rio Рест", "М033ЕА797": "Kia Rio Рест", "К402ЕА797": "Kia Rio Рест",
-    "Н985ЕА797": "Kia Rio Рест", "Н986ЕА797": "Kia Rio Рест", "А972ЕО797": "Kia Rio Рест",
-    "А374ВТ797": "Kia Rio Рест", "О488ЕА797": "Kia Rio Рест", "А369ЕХ797": "Kia Rio Рест",
-    "А373ЕТ797": "Kia Rio Рест", "А376ЕХ797": "Kia Rio Рест", "А368ЕВ797": "Kia Rio Рест",
-    "Н982ЕА797": "Kia Rio Рест", "К332ЕА797": "Kia Rio Рест", "А375ЕВ797": "Kia Rio Рест",
-    "О494ЕА797": "Kia Rio Рест", "А383ЕХ797": "Kia Rio Рест", "К393ЕА797": "Kia Rio Рест",
-    "Н969ЕА797": "Kia Rio Рест",
-    # LADA Vesta
-    "В450КН797": "LADA Vesta", "К174КТ797": "LADA Vesta", "К342КА797": "LADA Vesta",
-    # Skoda Octavia
-    "Х894ВЕ797": "Skoda Octavia", "К383ВА797": "Skoda Octavia", "К381АА797": "Skoda Octavia",
-    "К384АВ797": "Skoda Octavia", "К400АХ797": "Skoda Octavia", "К397АР797": "Skoda Octavia",
-    "К378АН797": "Skoda Octavia", "К371АК797": "Skoda Octavia", "К385АВ797": "Skoda Octavia",
-    "К384АР797": "Skoda Octavia", "К387АВ797": "Skoda Octavia",
-    # Skoda Rapid
-    "Н585ЕО797": "Skoda Rapid", "М017ЕА797": "Skoda Rapid", "К246ЕО797": "Skoda Rapid",
-    "А379ЕВ797": "Skoda Rapid", "А815ЕУ797": "Skoda Rapid", "К276ЕО797": "Skoda Rapid",
-    "К256ЕО797": "Skoda Rapid", "К348ЕА797": "Skoda Rapid", "А814ЕХ797": "Skoda Rapid",
-    "М158ЕО797": "Skoda Rapid", "К415ЕА797": "Skoda Rapid", "Н540ЕО797": "Skoda Rapid",
-    "А389ЕЕ797": "Skoda Rapid", "М736ЕО797": "Skoda Rapid", "А710ЕО797": "Skoda Rapid",
-    "М693ЕО797": "Skoda Rapid", "М165ЕО797": "Skoda Rapid", "К400ЕА797": "Skoda Rapid",
-    "А387ВТ797": "Skoda Rapid", "А715ВР797": "Skoda Rapid", "А817ЕТ797": "Skoda Rapid",
-    "А812ЕМ797": "Skoda Rapid", "А715ЕМ797": "Skoda Rapid", "А386ЕК797": "Skoda Rapid",
-    "А716ЕР797": "Skoda Rapid", "А710ВУ797": "Skoda Rapid", "К299ЕО797": "Skoda Rapid",
-    "К254ЕО797": "Skoda Rapid", "К293ЕО797": "Skoda Rapid", "А384ВК797": "Skoda Rapid",
-    "М137ЕО797": "Skoda Rapid", "А816ЕС797": "Skoda Rapid", "Е841ЕА797": "Skoda Rapid",
-    "А716ВС797": "Skoda Rapid", "К224ЕО797": "Skoda Rapid", "К404ЕА797": "Skoda Rapid",
-    "Е858ЕА797": "Skoda Rapid", "А815ЕА797": "Skoda Rapid", "А812ЕС797": "Skoda Rapid",
-    "М744ЕО797": "Skoda Rapid", "К220ЕО797": "Skoda Rapid", "А714ЕК797": "Skoda Rapid",
-    "А385ЕК797": "Skoda Rapid", "С591НО797": "Skoda Rapid", "М179ЕО797": "Skoda Rapid",
-    "К271ЕО797": "Skoda Rapid", "М738ЕО797": "Skoda Rapid", "А712ЕУ797": "Skoda Rapid",
-    "У509ЕС797": "Skoda Rapid", "К225ЕО797": "Skoda Rapid", "М167ЕО797": "Skoda Rapid",
-    "М670ЕО797": "Skoda Rapid", "К229ЕО797": "Skoda Rapid",
-    # Toyota Camry
+    "М151ЕТ797": "Kia Rio", "К349ЕА797": "Kia Rio Рест", "М033ЕА797": "Kia Rio Рест",
+    "К402ЕА797": "Kia Rio Рест", "Н985ЕА797": "Kia Rio Рест", "Н986ЕА797": "Kia Rio Рест",
+    "А972ЕО797": "Kia Rio Рест", "А374ВТ797": "Kia Rio Рест", "О488ЕА797": "Kia Rio Рест",
+    "А369ЕХ797": "Kia Rio Рест", "А373ЕТ797": "Kia Rio Рест", "А376ЕХ797": "Kia Rio Рест",
+    "А368ЕВ797": "Kia Rio Рест", "Н982ЕА797": "Kia Rio Рест", "К332ЕА797": "Kia Rio Рест",
+    "А375ЕВ797": "Kia Rio Рест", "О494ЕА797": "Kia Rio Рест", "А383ЕХ797": "Kia Rio Рест",
+    "К393ЕА797": "Kia Rio Рест", "Н969ЕА797": "Kia Rio Рест", "В450КН797": "LADA Vesta",
+    "К174КТ797": "LADA Vesta", "К342КА797": "LADA Vesta", "Х894ВЕ797": "Skoda Octavia",
+    "К383ВА797": "Skoda Octavia", "К381АА797": "Skoda Octavia", "К384АВ797": "Skoda Octavia",
+    "К400АХ797": "Skoda Octavia", "К397АР797": "Skoda Octavia", "К378АН797": "Skoda Octavia",
+    "К371АК797": "Skoda Octavia", "К385АВ797": "Skoda Octavia", "К384АР797": "Skoda Octavia",
+    "К387АВ797": "Skoda Octavia", "Н585ЕО797": "Skoda Rapid", "М017ЕА797": "Skoda Rapid",
+    "К246ЕО797": "Skoda Rapid", "А379ЕВ797": "Skoda Rapid", "А815ЕУ797": "Skoda Rapid",
+    "К276ЕО797": "Skoda Rapid", "К256ЕО797": "Skoda Rapid", "К348ЕА797": "Skoda Rapid",
+    "А814ЕХ797": "Skoda Rapid", "М158ЕО797": "Skoda Rapid", "К415ЕА797": "Skoda Rapid",
+    "Н540ЕО797": "Skoda Rapid", "А389ЕЕ797": "Skoda Rapid", "М736ЕО797": "Skoda Rapid",
+    "А710ЕО797": "Skoda Rapid", "М693ЕО797": "Skoda Rapid", "М165ЕО797": "Skoda Rapid",
+    "К400ЕА797": "Skoda Rapid", "А387ВТ797": "Skoda Rapid", "А715ВР797": "Skoda Rapid",
+    "А817ЕТ797": "Skoda Rapid", "А812ЕМ797": "Skoda Rapid", "А715ЕМ797": "Skoda Rapid",
+    "А386ЕК797": "Skoda Rapid", "А716ЕР797": "Skoda Rapid", "А710ВУ797": "Skoda Rapid",
+    "К299ЕО797": "Skoda Rapid", "К254ЕО797": "Skoda Rapid", "К293ЕО797": "Skoda Rapid",
+    "А384ВК797": "Skoda Rapid", "М137ЕО797": "Skoda Rapid", "А816ЕС797": "Skoda Rapid",
+    "Е841ЕА797": "Skoda Rapid", "А716ВС797": "Skoda Rapid", "К224ЕО797": "Skoda Rapid",
+    "К404ЕА797": "Skoda Rapid", "Е858ЕА797": "Skoda Rapid", "А815ЕА797": "Skoda Rapid",
+    "А812ЕС797": "Skoda Rapid", "М744ЕО797": "Skoda Rapid", "К220ЕО797": "Skoda Rapid",
+    "А714ЕК797": "Skoda Rapid", "А385ЕК797": "Skoda Rapid", "С591НО797": "Skoda Rapid",
+    "М179ЕО797": "Skoda Rapid", "К271ЕО797": "Skoda Rapid", "М738ЕО797": "Skoda Rapid",
+    "А712ЕУ797": "Skoda Rapid", "У509ЕС797": "Skoda Rapid", "К225ЕО797": "Skoda Rapid",
+    "М167ЕО797": "Skoda Rapid", "М670ЕО797": "Skoda Rapid", "К229ЕО797": "Skoda Rapid",
     "Р585МО797": "Toyota Camry",
-    # Дополнительные машины из твоего списка
     "Е787НУ797": "Geely Coolray", "Е653НО797": "Geely Coolray", "Е482НА797": "Geely Coolray",
     "Е472НА797": "Geely Coolray", "В509НХ797": "Geely Coolray", "М475НК797": "Geely Coolray",
     "В488НХ797": "Geely Coolray", "Е536НА797": "Geely Coolray", "Е136НО797": "Geely Coolray",
@@ -358,12 +334,19 @@ async def send_to_bitrix24(phone, name, car_number, car_model, uid):
             user_deal_map[deal_id] = uid
             print(f"✅ Сделка {deal_id} привязана к {uid}")
 
-# ========== ВЕБХУК ==========
+# ========== ИСПРАВЛЕННЫЙ ВЕБХУК ==========
 @app.post("/bitrix_webhook")
 async def bitrix_webhook(request: Request):
     try:
+        body = await request.body()
+        if not body:
+            print("⚠️ Пустой вебхук (проверка подписки)")
+            return {"status": "ok"}
+        
         data = await request.json()
-        if data.get("event") == "ONCRMDEALUPDATE":
+        event = data.get("event")
+        
+        if event == "ONCRMDEALUPDATE":
             deal_id = data.get("data", {}).get("FIELDS", {}).get("ID")
             if deal_id and deal_id in user_deal_map:
                 user_id = user_deal_map[deal_id]
@@ -371,9 +354,10 @@ async def bitrix_webhook(request: Request):
                 if comment:
                     await send_message_to_max(user_id, f"📝 Ответ от менеджера:\n{comment}")
                     print(f"✅ Ответ отправлен {user_id}")
+        
         return {"status": "ok"}
     except Exception as e:
-        print(f"❌ Ошибка: {e}")
+        print(f"❌ Ошибка вебхука: {e}")
         return {"status": "error"}
 
 # ========== ОБРАБОТЧИКИ MAX ==========
