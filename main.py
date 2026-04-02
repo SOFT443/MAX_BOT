@@ -12,9 +12,8 @@ BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
 CATEGORY_ID = 14
 # ===============================
 
-# ========== ВСЕ АВТОМОБИЛИ ==========
+# ========== ВСЕ АВТОМОБИЛИ ИЗ EXCEL ==========
 VALID_CARS = {
-    # Belgee X50
     "Т731ХО797": "Belgee X50",
     "Е330ХТ797": "Belgee X50",
     "Е327ХС797": "Belgee X50",
@@ -65,7 +64,6 @@ VALID_CARS = {
     "Е331ХС797": "Belgee X50",
     "Е375ХТ797": "Belgee X50",
     "Т212ХР797": "Belgee X50",
-    # Chery Arrizo 8
     "О615РН797": "Chery Arrizo 8",
     "Е036ОК797": "Chery Arrizo 8",
     "О919РН797": "Chery Arrizo 8",
@@ -74,7 +72,6 @@ VALID_CARS = {
     "Х069РР797": "Chery Arrizo 8",
     "О905РН797": "Chery Arrizo 8",
     "О469РН797": "Chery Arrizo 8",
-    # Chery Tiggo 4
     "Е488НН797": "Chery Tiggo 4",
     "К012НР797": "Chery Tiggo 4",
     "К676НТ797": "Chery Tiggo 4",
@@ -84,7 +81,6 @@ VALID_CARS = {
     "К042НР797": "Chery Tiggo 4",
     "Х187НН797": "Chery Tiggo 4",
     "Е984НУ797": "Chery Tiggo 4",
-    # Chery Tiggo 7 Pro
     "М969МВ797": "Chery Tiggo 7 Pro",
     "Е546ОМ797": "Chery Tiggo 7 Pro",
     "Е797ОК797": "Chery Tiggo 7 Pro",
@@ -132,7 +128,6 @@ VALID_CARS = {
     "К518МХ797": "Chery Tiggo 7 Pro",
     "ЕВ07699": "Chery Tiggo 7 Pro",
     "Е664ОР797": "Chery Tiggo 7 Pro",
-    # Chery Tiggo 7 Pro Max
     "Е059ОН797": "Chery Tiggo 7 Pro Max",
     "Е550ОМ797": "Chery Tiggo 7 Pro Max",
     "Е057ОН797": "Chery Tiggo 7 Pro Max",
@@ -143,13 +138,11 @@ VALID_CARS = {
     "Е076ОН797": "Chery Tiggo 7 Pro Max",
     "Е145ОС797": "Chery Tiggo 7 Pro Max",
     "Е186ОС797": "Chery Tiggo 7 Pro Max",
-    # EVOLUTE i-PRO
     "Х960РЕ797": "EVOLUTE i-PRO",
     "Х409РО797": "EVOLUTE i-PRO",
     "Х918РН797": "EVOLUTE i-PRO",
     "Х456РО797": "EVOLUTE i-PRO",
     "Х393РО797": "EVOLUTE i-PRO",
-    # FAW Bestune B70
     "О085УМ797": "FAW Bestune B70",
     "А455ХВ797": "FAW Bestune B70",
     "О636УО797": "FAW Bestune B70",
@@ -196,7 +189,6 @@ VALID_CARS = {
     "К801УУ797": "FAW Bestune B70",
     "О090УМ797": "FAW Bestune B70",
     "Р321УУ797": "FAW Bestune B70",
-    # Geely Atlas Pro
     "Х185РМ797": "Geely Atlas Pro",
     "М130ОУ797": "Geely Atlas Pro",
     "С096РВ797": "Geely Atlas Pro",
@@ -257,7 +249,6 @@ VALID_CARS = {
     "М155ОУ797": "Geely Atlas Pro",
     "Х694РК797": "Geely Atlas Pro",
     "Х152РА797": "Geely Atlas Pro",
-    # Geely Coolray
     "Е787НУ797": "Geely Coolray",
     "Е653НО797": "Geely Coolray",
     "Е482НА797": "Geely Coolray",
@@ -323,7 +314,6 @@ VALID_CARS = {
     "Е162НО797": "Geely Coolray",
     "М179НМ797": "Geely Coolray",
     "М189НМ797": "Geely Coolray",
-    # Haval F7
     "Х116ОМ797": "Haval F7",
     "М850ОТ797": "Haval F7",
     "Х603ОО797": "Haval F7",
@@ -344,7 +334,6 @@ VALID_CARS = {
     "Х076ОМ797": "Haval F7",
     "Х124ОМ797": "Haval F7",
     "Х580ОК797": "Haval F7",
-    # Haval Jolion
     "У367УР797": "Haval Jolion",
     "Т597ОР797": "Haval Jolion",
     "Х562УС797": "Haval Jolion",
@@ -441,14 +430,12 @@ VALID_CARS = {
     "У829УО797": "Haval Jolion",
     "У161РУ797": "Haval Jolion",
     "Т017ОН797": "Haval Jolion",
-    # Hongqi H5
     "А558ХА797": "Hongqi H5",
     "А554ТС797": "Hongqi H5",
     "А558СА797": "Hongqi H5",
     "А558ТЕ797": "Hongqi H5",
     "А557ХР797": "Hongqi H5",
     "А052ТС797": "Hongqi H5",
-    # Kia K5
     "О448ЕТ797": "Kia K5",
     "К201ЕО797": "Kia K5",
     "Р845ЕТ797": "Kia K5",
@@ -490,13 +477,11 @@ VALID_CARS = {
     "Р881ЕТ797": "Kia K5",
     "О015ЕК797": "Kia K5",
     "К159ЕО797": "Kia K5",
-    # Kia Optima
     "К394АВ797": "Kia Optima",
     "К392АН797": "Kia Optima",
     "К390АТ797": "Kia Optima",
     "К397АН797": "Kia Optima",
     "К395АН797": "Kia Optima",
-    # Kia Rio (большой список, оставлю основные для краткости)
     "К355ЕС797": "Kia Rio",
     "Т102ЕС797": "Kia Rio",
     "Х218УХ799": "Kia Rio",
@@ -750,7 +735,6 @@ VALID_CARS = {
     "ВК45299": "Kia Rio",
     "Т066ЕС797": "Kia Rio",
     "М151ЕТ797": "Kia Rio",
-    # Kia Rio Рест
     "К349ЕА797": "Kia Rio Рест",
     "М033ЕА797": "Kia Rio Рест",
     "К402ЕА797": "Kia Rio Рест",
@@ -770,11 +754,9 @@ VALID_CARS = {
     "А383ЕХ797": "Kia Rio Рест",
     "К393ЕА797": "Kia Rio Рест",
     "Н969ЕА797": "Kia Rio Рест",
-    # LADA Vesta
     "В450КН797": "LADA Vesta",
     "К174КТ797": "LADA Vesta",
     "К342КА797": "LADA Vesta",
-    # Skoda Octavia
     "Х894ВЕ797": "Skoda Octavia",
     "К383ВА797": "Skoda Octavia",
     "К381АА797": "Skoda Octavia",
@@ -786,7 +768,6 @@ VALID_CARS = {
     "К385АВ797": "Skoda Octavia",
     "К384АР797": "Skoda Octavia",
     "К387АВ797": "Skoda Octavia",
-    # Skoda Rapid
     "Н585ЕО797": "Skoda Rapid",
     "М017ЕА797": "Skoda Rapid",
     "К246ЕО797": "Skoda Rapid",
@@ -840,7 +821,6 @@ VALID_CARS = {
     "М167ЕО797": "Skoda Rapid",
     "М670ЕО797": "Skoda Rapid",
     "К229ЕО797": "Skoda Rapid",
-    # Toyota Camry
     "Р585МО797": "Toyota Camry",
 }
 
@@ -852,7 +832,6 @@ logging.basicConfig(level=logging.INFO)
 user_data = {}
 processed = set()
 
-# ========== ПИНГ ==========
 async def keep_alive():
     while True:
         await asyncio.sleep(600)
@@ -862,7 +841,6 @@ async def keep_alive():
         except:
             pass
 
-# ========== БИТРИКС ==========
 async def send_to_bitrix24(phone, name, car_number, car_model):
     base = BITRIX_WEBHOOK
     contact_data = {"fields": {"NAME": name, "PHONE": [{"VALUE": phone}]}}
@@ -883,7 +861,6 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
         }
         await client.post(f"{base}/crm.deal.add.json", json=deal_data, timeout=30)
 
-# ========== БОТ ==========
 @dp.bot_started()
 async def on_start(event):
     await event.bot.send_message(chat_id=event.chat_id, text="Напишите /start")
