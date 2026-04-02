@@ -2,7 +2,7 @@ import asyncio
 import logging
 import threading
 import httpx
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from maxapi import Bot, Dispatcher
 from maxapi.types import BotStarted, MessageCreated
 
@@ -10,10 +10,10 @@ from maxapi.types import BotStarted, MessageCreated
 TOKEN = "f9LHodD0cOJYcBrUhdAkWfRzKqK57mFf5SExUIZIHXqG0PoiAgzYBDoEEOb2gBsW7OkfIOrxCdUu-J-BhcxK"
 BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
 CATEGORY_ID = 14
-RENDER_URL = "https://max-booking-bot-1.onrender.com"  # ВАШ URL НА RENDER
+RENDER_URL = "https://max-booking-bot-1.onrender.com"
 # ===============================
 
-# ========== ВСЕ АВТОМОБИЛИ ИЗ EXCEL ==========
+# ========== ВСЕ АВТОМОБИЛИ ==========
 VALID_CARS = {
     "Т731ХО797": "Belgee X50",
     "Е330ХТ797": "Belgee X50",
@@ -25,46 +25,6 @@ VALID_CARS = {
     "Е335ХТ797": "Belgee X50",
     "Т203ХР797": "Belgee X50",
     "Т638ХА797": "Belgee X50",
-    "Е380ХТ797": "Belgee X50",
-    "Е336ХТ797": "Belgee X50",
-    "Т775ХТ797": "Belgee X50",
-    "Т258ХР797": "Belgee X50",
-    "Е364ХТ797": "Belgee X50",
-    "Т281ХМ797": "Belgee X50",
-    "Е376ХТ797": "Belgee X50",
-    "Е358ХТ797": "Belgee X50",
-    "Е355ХТ797": "Belgee X50",
-    "Т785ХО797": "Belgee X50",
-    "Е326ХС797": "Belgee X50",
-    "Е337ХС797": "Belgee X50",
-    "Е242ХУ797": "Belgee X50",
-    "Т276ХР797": "Belgee X50",
-    "Е346ХТ797": "Belgee X50",
-    "Т261ХМ797": "Belgee X50",
-    "Е377ХС797": "Belgee X50",
-    "Т788ХО797": "Belgee X50",
-    "Е314ХТ797": "Belgee X50",
-    "Е340ХС797": "Belgee X50",
-    "Т761ХО797": "Belgee X50",
-    "Т278ХВ797": "Belgee X50",
-    "Е319ХТ797": "Belgee X50",
-    "Е377ХТ797": "Belgee X50",
-    "Е396ХС797": "Belgee X50",
-    "Е369ХС797": "Belgee X50",
-    "Е243ХУ797": "Belgee X50",
-    "Т281ХВ797": "Belgee X50",
-    "Е381ХТ797": "Belgee X50",
-    "Е346ХС797": "Belgee X50",
-    "Т219ХВ797": "Belgee X50",
-    "Т245ХМ797": "Belgee X50",
-    "Т757ХК797": "Belgee X50",
-    "Т228ХВ797": "Belgee X50",
-    "Т236ХВ797": "Belgee X50",
-    "Т245ХВ797": "Belgee X50",
-    "Т266ХВ797": "Belgee X50",
-    "Е331ХС797": "Belgee X50",
-    "Е375ХТ797": "Belgee X50",
-    "Т212ХР797": "Belgee X50",
     "О615РН797": "Chery Arrizo 8",
     "Е036ОК797": "Chery Arrizo 8",
     "О919РН797": "Chery Arrizo 8",
@@ -129,16 +89,6 @@ VALID_CARS = {
     "К518МХ797": "Chery Tiggo 7 Pro",
     "ЕВ07699": "Chery Tiggo 7 Pro",
     "Е664ОР797": "Chery Tiggo 7 Pro",
-    "Е059ОН797": "Chery Tiggo 7 Pro Max",
-    "Е550ОМ797": "Chery Tiggo 7 Pro Max",
-    "Е057ОН797": "Chery Tiggo 7 Pro Max",
-    "Е650ОР797": "Chery Tiggo 7 Pro Max",
-    "Е198ОС797": "Chery Tiggo 7 Pro Max",
-    "Е672ОР797": "Chery Tiggo 7 Pro Max",
-    "Е687ОР797": "Chery Tiggo 7 Pro Max",
-    "Е076ОН797": "Chery Tiggo 7 Pro Max",
-    "Е145ОС797": "Chery Tiggo 7 Pro Max",
-    "Е186ОС797": "Chery Tiggo 7 Pro Max",
     "Х960РЕ797": "EVOLUTE i-PRO",
     "Х409РО797": "EVOLUTE i-PRO",
     "Х918РН797": "EVOLUTE i-PRO",
@@ -250,71 +200,6 @@ VALID_CARS = {
     "М155ОУ797": "Geely Atlas Pro",
     "Х694РК797": "Geely Atlas Pro",
     "Х152РА797": "Geely Atlas Pro",
-    "Е787НУ797": "Geely Coolray",
-    "Е653НО797": "Geely Coolray",
-    "Е482НА797": "Geely Coolray",
-    "Е472НА797": "Geely Coolray",
-    "В509НХ797": "Geely Coolray",
-    "М475НК797": "Geely Coolray",
-    "В488НХ797": "Geely Coolray",
-    "Е536НА797": "Geely Coolray",
-    "Е136НО797": "Geely Coolray",
-    "Е524НА797": "Geely Coolray",
-    "Е166НО797": "Geely Coolray",
-    "Е140НО797": "Geely Coolray",
-    "Е024НК797": "Geely Coolray",
-    "Е121НО797": "Geely Coolray",
-    "Е019НК797": "Geely Coolray",
-    "В931НУ797": "Geely Coolray",
-    "Е649НО797": "Geely Coolray",
-    "М157НМ797": "Geely Coolray",
-    "Е645НО797": "Geely Coolray",
-    "Е534НА797": "Geely Coolray",
-    "Е642НО797": "Geely Coolray",
-    "Е059НК797": "Geely Coolray",
-    "Е644НО797": "Geely Coolray",
-    "Е033НК797": "Geely Coolray",
-    "Е768НУ797": "Geely Coolray",
-    "В491НХ797": "Geely Coolray",
-    "Е658НО797": "Geely Coolray",
-    "В956НУ797": "Geely Coolray",
-    "В953НУ797": "Geely Coolray",
-    "Е101НО797": "Geely Coolray",
-    "Е680НО797": "Geely Coolray",
-    "Е151НО797": "Geely Coolray",
-    "Е064НК797": "Geely Coolray",
-    "Е131НО797": "Geely Coolray",
-    "Е509НА797": "Geely Coolray",
-    "Е054НК797": "Geely Coolray",
-    "М866НТ797": "Geely Coolray",
-    "М682НО797": "Geely Coolray",
-    "М498НК797": "Geely Coolray",
-    "М707НО797": "Geely Coolray",
-    "Е011НК797": "Geely Coolray",
-    "Е133НО797": "Geely Coolray",
-    "В951НУ797": "Geely Coolray",
-    "Е500НА797": "Geely Coolray",
-    "В495НХ797": "Geely Coolray",
-    "Е038НК797": "Geely Coolray",
-    "М660НО797": "Geely Coolray",
-    "Е141НО797": "Geely Coolray",
-    "Е115НО797": "Geely Coolray",
-    "Е163НО797": "Geely Coolray",
-    "Е100НО797": "Geely Coolray",
-    "Е340НХ797": "Geely Coolray",
-    "Е510НА797": "Geely Coolray",
-    "Е672НО797": "Geely Coolray",
-    "М181НМ797": "Geely Coolray",
-    "Е014НВ797": "Geely Coolray",
-    "Е521НА797": "Geely Coolray",
-    "Е029НК797": "Geely Coolray",
-    "Е480НА797": "Geely Coolray",
-    "В960НУ797": "Geely Coolray",
-    "М711НО797": "Geely Coolray",
-    "Е641НО797": "Geely Coolray",
-    "Е162НО797": "Geely Coolray",
-    "М179НМ797": "Geely Coolray",
-    "М189НМ797": "Geely Coolray",
     "Х116ОМ797": "Haval F7",
     "М850ОТ797": "Haval F7",
     "Х603ОО797": "Haval F7",
@@ -483,278 +368,6 @@ VALID_CARS = {
     "К390АТ797": "Kia Optima",
     "К397АН797": "Kia Optima",
     "К395АН797": "Kia Optima",
-    "К355ЕС797": "Kia Rio",
-    "Т102ЕС797": "Kia Rio",
-    "Х218УХ799": "Kia Rio",
-    "Х175УХ799": "Kia Rio",
-    "Н365ЕТ797": "Kia Rio",
-    "К316ЕС797": "Kia Rio",
-    "Н287ЕТ797": "Kia Rio",
-    "К807ЕЕ797": "Kia Rio",
-    "ВК40199": "Kia Rio",
-    "РК30377": "Kia Rio",
-    "О621ЕТ797": "Kia Rio",
-    "А068КУ797": "Kia Rio",
-    "ВК42899": "Kia Rio",
-    "М450ЕС797": "Kia Rio",
-    "ВК38699": "Kia Rio",
-    "К347ЕС797": "Kia Rio",
-    "ВК36999": "Kia Rio",
-    "Х072УХ799": "Kia Rio",
-    "С653ТР797": "Kia Rio",
-    "РК49277": "Kia Rio",
-    "ВК42499": "Kia Rio",
-    "К326ЕС797": "Kia Rio",
-    "Т126ЕС797": "Kia Rio",
-    "Т048ЕС797": "Kia Rio",
-    "РК32377": "Kia Rio",
-    "ОХ86177": "Kia Rio",
-    "Т076ЕС797": "Kia Rio",
-    "Т050ЕС797": "Kia Rio",
-    "ВЕ01299": "Kia Rio",
-    "ВК40099": "Kia Rio",
-    "Н641УЕ797": "Kia Rio",
-    "О885ЕС797": "Kia Rio",
-    "Н644ЕС797": "Kia Rio",
-    "ВК35599": "Kia Rio",
-    "О909ЕС797": "Kia Rio",
-    "Н318ЕТ797": "Kia Rio",
-    "М136ЕТ797": "Kia Rio",
-    "Н343ЕТ797": "Kia Rio",
-    "РК31577": "Kia Rio",
-    "ВЕ01899": "Kia Rio",
-    "ВК35899": "Kia Rio",
-    "Т109ЕС797": "Kia Rio",
-    "РК51177": "Kia Rio",
-    "С653ХУ797": "Kia Rio",
-    "К924ЕМ797": "Kia Rio",
-    "Е902УМ797": "Kia Rio",
-    "ОХ90277": "Kia Rio",
-    "ОХ85477": "Kia Rio",
-    "Т127ЕС797": "Kia Rio",
-    "РК29477": "Kia Rio",
-    "ВК37199": "Kia Rio",
-    "О908ЕС797": "Kia Rio",
-    "ВК36399": "Kia Rio",
-    "Т077ЕС797": "Kia Rio",
-    "Т128ЕС797": "Kia Rio",
-    "Р587ЕУ797": "Kia Rio",
-    "М388ЕС797": "Kia Rio",
-    "М185ЕТ797": "Kia Rio",
-    "Х709ЕС797": "Kia Rio",
-    "К815ЕЕ797": "Kia Rio",
-    "ВК39799": "Kia Rio",
-    "ВК36099": "Kia Rio",
-    "ВЕ04899": "Kia Rio",
-    "Т098ЕС797": "Kia Rio",
-    "ВЕ01199": "Kia Rio",
-    "Х655ЕС797": "Kia Rio",
-    "РК51477": "Kia Rio",
-    "Х722ЕС797": "Kia Rio",
-    "ВК36899": "Kia Rio",
-    "РК53177": "Kia Rio",
-    "Т046ЕС797": "Kia Rio",
-    "ВЕ03299": "Kia Rio",
-    "ОХ87477": "Kia Rio",
-    "К352ЕС797": "Kia Rio",
-    "РК30277": "Kia Rio",
-    "ОХ85677": "Kia Rio",
-    "ОХ89877": "Kia Rio",
-    "ОХ89477": "Kia Rio",
-    "М181ЕТ797": "Kia Rio",
-    "ВК37799": "Kia Rio",
-    "ВК35799": "Kia Rio",
-    "Н592ЕС797": "Kia Rio",
-    "ОХ85977": "Kia Rio",
-    "ВК39599": "Kia Rio",
-    "РК31977": "Kia Rio",
-    "ВК37499": "Kia Rio",
-    "ОХ89077": "Kia Rio",
-    "ВК43999": "Kia Rio",
-    "У213АМ797": "Kia Rio",
-    "Х707ЕС797": "Kia Rio",
-    "В994ХК797": "Kia Rio",
-    "ВК37899": "Kia Rio",
-    "М132ЕТ797": "Kia Rio",
-    "С185ТН797": "Kia Rio",
-    "М432ЕС797": "Kia Rio",
-    "К933ЕМ797": "Kia Rio",
-    "С311ХО797": "Kia Rio",
-    "ВК45099": "Kia Rio",
-    "К950ЕМ797": "Kia Rio",
-    "Т054ЕС797": "Kia Rio",
-    "ОХ87977": "Kia Rio",
-    "ОХ87677": "Kia Rio",
-    "С610ТР797": "Kia Rio",
-    "ВК39999": "Kia Rio",
-    "ВК38999": "Kia Rio",
-    "О900ЕС797": "Kia Rio",
-    "ОХ89377": "Kia Rio",
-    "Т061ЕС797": "Kia Rio",
-    "ВЕ03099": "Kia Rio",
-    "РК54177": "Kia Rio",
-    "ВК42199": "Kia Rio",
-    "ОХ88477": "Kia Rio",
-    "ВК37599": "Kia Rio",
-    "Т090ЕС797": "Kia Rio",
-    "У216АМ797": "Kia Rio",
-    "ВК37099": "Kia Rio",
-    "К314ЕС797": "Kia Rio",
-    "ВЕ04499": "Kia Rio",
-    "К788ЕЕ797": "Kia Rio",
-    "Р558ЕУ797": "Kia Rio",
-    "РК28377": "Kia Rio",
-    "Т093ЕС797": "Kia Rio",
-    "ВК43599": "Kia Rio",
-    "ВЕ04999": "Kia Rio",
-    "Н322ЕТ797": "Kia Rio",
-    "ВК42599": "Kia Rio",
-    "О968ТК797": "Kia Rio",
-    "Х112УХ799": "Kia Rio",
-    "Н640ЕС797": "Kia Rio",
-    "РК32677": "Kia Rio",
-    "К348ЕС797": "Kia Rio",
-    "У186АМ797": "Kia Rio",
-    "ВЕ01999": "Kia Rio",
-    "ОХ89577": "Kia Rio",
-    "К308ЕС797": "Kia Rio",
-    "ВЕ05999": "Kia Rio",
-    "Н593ЕС797": "Kia Rio",
-    "Х712ЕС797": "Kia Rio",
-    "Е092ВУ797": "Kia Rio",
-    "Е360СС797": "Kia Rio",
-    "М194ЕТ797": "Kia Rio",
-    "М202ЕТ797": "Kia Rio",
-    "РК50377": "Kia Rio",
-    "РК51077": "Kia Rio",
-    "ВК40299": "Kia Rio",
-    "Р560ЕУ797": "Kia Rio",
-    "Р577ЕУ797": "Kia Rio",
-    "О585ЕТ797": "Kia Rio",
-    "ВК43499": "Kia Rio",
-    "ОХ85877": "Kia Rio",
-    "М140ЕТ797": "Kia Rio",
-    "М343ЕЕ797": "Kia Rio",
-    "Т044ЕС797": "Kia Rio",
-    "С152ТН797": "Kia Rio",
-    "ОХ88677": "Kia Rio",
-    "ВК36299": "Kia Rio",
-    "Х169УХ799": "Kia Rio",
-    "У210АМ797": "Kia Rio",
-    "М369ЕС797": "Kia Rio",
-    "ОХ86577": "Kia Rio",
-    "О610ТВ797": "Kia Rio",
-    "К380ЕС797": "Kia Rio",
-    "ВЕ02399": "Kia Rio",
-    "Н350ЕТ797": "Kia Rio",
-    "М142ЕТ797": "Kia Rio",
-    "ОХ89677": "Kia Rio",
-    "ВК42699": "Kia Rio",
-    "Т119ЕС797": "Kia Rio",
-    "ВЕ04799": "Kia Rio",
-    "Х187УХ799": "Kia Rio",
-    "К385ЕС797": "Kia Rio",
-    "Р574ЕУ797": "Kia Rio",
-    "РК52677": "Kia Rio",
-    "ВЕ01499": "Kia Rio",
-    "Т080ЕС797": "Kia Rio",
-    "РК32977": "Kia Rio",
-    "У734АО797": "Kia Rio",
-    "ОХ87377": "Kia Rio",
-    "Х715ЕС797": "Kia Rio",
-    "Т107ЕС797": "Kia Rio",
-    "РК28177": "Kia Rio",
-    "К365ЕС797": "Kia Rio",
-    "РК52177": "Kia Rio",
-    "ВЕ03199": "Kia Rio",
-    "РК28277": "Kia Rio",
-    "В544ХМ797": "Kia Rio",
-    "РК29177": "Kia Rio",
-    "М137ЕТ797": "Kia Rio",
-    "РК28677": "Kia Rio",
-    "ОХ88277": "Kia Rio",
-    "Н331ЕТ797": "Kia Rio",
-    "Т092ЕС797": "Kia Rio",
-    "ВК43199": "Kia Rio",
-    "РК53277": "Kia Rio",
-    "ВЕ05799": "Kia Rio",
-    "ВЕ05099": "Kia Rio",
-    "М449ЕС797": "Kia Rio",
-    "М161ЕТ797": "Kia Rio",
-    "РК50977": "Kia Rio",
-    "РК32477": "Kia Rio",
-    "Т091ЕС797": "Kia Rio",
-    "А066КО797": "Kia Rio",
-    "ОХ88077": "Kia Rio",
-    "М298ЕЕ797": "Kia Rio",
-    "Т129ЕС797": "Kia Rio",
-    "РК31477": "Kia Rio",
-    "ВЕ02099": "Kia Rio",
-    "Х721ЕС797": "Kia Rio",
-    "ОХ89777": "Kia Rio",
-    "РК51577": "Kia Rio",
-    "М309ЕЕ797": "Kia Rio",
-    "ВК42099": "Kia Rio",
-    "К357ЕС797": "Kia Rio",
-    "М147ЕТ797": "Kia Rio",
-    "ВК38399": "Kia Rio",
-    "В564ХН797": "Kia Rio",
-    "РК31377": "Kia Rio",
-    "РК49977": "Kia Rio",
-    "С657ХС797": "Kia Rio",
-    "ВК35999": "Kia Rio",
-    "Н351ЕТ797": "Kia Rio",
-    "Х720ЕС797": "Kia Rio",
-    "О860ЕС797": "Kia Rio",
-    "К870ТА797": "Kia Rio",
-    "Т052ЕС797": "Kia Rio",
-    "Т104ЕС797": "Kia Rio",
-    "О897ЕС797": "Kia Rio",
-    "Н299ЕТ797": "Kia Rio",
-    "РК53677": "Kia Rio",
-    "У256АМ797": "Kia Rio",
-    "ВЕ02899": "Kia Rio",
-    "РК51977": "Kia Rio",
-    "ВЕ02499": "Kia Rio",
-    "М378ЕС797": "Kia Rio",
-    "А890ХА797": "Kia Rio",
-    "М184ЕТ797": "Kia Rio",
-    "ВЕ03799": "Kia Rio",
-    "К801ЕЕ797": "Kia Rio",
-    "ВК37999": "Kia Rio",
-    "ВЕ05499": "Kia Rio",
-    "ВК42999": "Kia Rio",
-    "К782ЕЕ797": "Kia Rio",
-    "Т123ЕС797": "Kia Rio",
-    "К934ЕМ797": "Kia Rio",
-    "С029СР797": "Kia Rio",
-    "А984ЕО797": "Kia Rio",
-    "ВК38799": "Kia Rio",
-    "РК30077": "Kia Rio",
-    "К366ЕС797": "Kia Rio",
-    "РК28577": "Kia Rio",
-    "ВК45299": "Kia Rio",
-    "Т066ЕС797": "Kia Rio",
-    "М151ЕТ797": "Kia Rio",
-    "К349ЕА797": "Kia Rio Рест",
-    "М033ЕА797": "Kia Rio Рест",
-    "К402ЕА797": "Kia Rio Рест",
-    "Н985ЕА797": "Kia Rio Рест",
-    "Н986ЕА797": "Kia Rio Рест",
-    "А972ЕО797": "Kia Rio Рест",
-    "А374ВТ797": "Kia Rio Рест",
-    "О488ЕА797": "Kia Rio Рест",
-    "А369ЕХ797": "Kia Rio Рест",
-    "А373ЕТ797": "Kia Rio Рест",
-    "А376ЕХ797": "Kia Rio Рест",
-    "А368ЕВ797": "Kia Rio Рест",
-    "Н982ЕА797": "Kia Rio Рест",
-    "К332ЕА797": "Kia Rio Рест",
-    "А375ЕВ797": "Kia Rio Рест",
-    "О494ЕА797": "Kia Rio Рест",
-    "А383ЕХ797": "Kia Rio Рест",
-    "К393ЕА797": "Kia Rio Рест",
-    "Н969ЕА797": "Kia Rio Рест",
     "В450КН797": "LADA Vesta",
     "К174КТ797": "LADA Vesta",
     "К342КА797": "LADA Vesta",
@@ -769,59 +382,6 @@ VALID_CARS = {
     "К385АВ797": "Skoda Octavia",
     "К384АР797": "Skoda Octavia",
     "К387АВ797": "Skoda Octavia",
-    "Н585ЕО797": "Skoda Rapid",
-    "М017ЕА797": "Skoda Rapid",
-    "К246ЕО797": "Skoda Rapid",
-    "А379ЕВ797": "Skoda Rapid",
-    "А815ЕУ797": "Skoda Rapid",
-    "К276ЕО797": "Skoda Rapid",
-    "К256ЕО797": "Skoda Rapid",
-    "К348ЕА797": "Skoda Rapid",
-    "А814ЕХ797": "Skoda Rapid",
-    "М158ЕО797": "Skoda Rapid",
-    "К415ЕА797": "Skoda Rapid",
-    "Н540ЕО797": "Skoda Rapid",
-    "А389ЕЕ797": "Skoda Rapid",
-    "М736ЕО797": "Skoda Rapid",
-    "А710ЕО797": "Skoda Rapid",
-    "М693ЕО797": "Skoda Rapid",
-    "М165ЕО797": "Skoda Rapid",
-    "К400ЕА797": "Skoda Rapid",
-    "А387ВТ797": "Skoda Rapid",
-    "А715ВР797": "Skoda Rapid",
-    "А817ЕТ797": "Skoda Rapid",
-    "А812ЕМ797": "Skoda Rapid",
-    "А715ЕМ797": "Skoda Rapid",
-    "А386ЕК797": "Skoda Rapid",
-    "А716ЕР797": "Skoda Rapid",
-    "А710ВУ797": "Skoda Rapid",
-    "К299ЕО797": "Skoda Rapid",
-    "К254ЕО797": "Skoda Rapid",
-    "К293ЕО797": "Skoda Rapid",
-    "А384ВК797": "Skoda Rapid",
-    "М137ЕО797": "Skoda Rapid",
-    "А816ЕС797": "Skoda Rapid",
-    "Е841ЕА797": "Skoda Rapid",
-    "А716ВС797": "Skoda Rapid",
-    "К224ЕО797": "Skoda Rapid",
-    "К404ЕА797": "Skoda Rapid",
-    "Е858ЕА797": "Skoda Rapid",
-    "А815ЕА797": "Skoda Rapid",
-    "А812ЕС797": "Skoda Rapid",
-    "М744ЕО797": "Skoda Rapid",
-    "К220ЕО797": "Skoda Rapid",
-    "А714ЕК797": "Skoda Rapid",
-    "А385ЕК797": "Skoda Rapid",
-    "С591НО797": "Skoda Rapid",
-    "М179ЕО797": "Skoda Rapid",
-    "К271ЕО797": "Skoda Rapid",
-    "М738ЕО797": "Skoda Rapid",
-    "А712ЕУ797": "Skoda Rapid",
-    "У509ЕС797": "Skoda Rapid",
-    "К225ЕО797": "Skoda Rapid",
-    "М167ЕО797": "Skoda Rapid",
-    "М670ЕО797": "Skoda Rapid",
-    "К229ЕО797": "Skoda Rapid",
     "Р585МО797": "Toyota Camry",
 }
 
@@ -832,25 +392,51 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 user_data = {}
 processed = set()
+user_deal_map = {}  # deal_id -> user_id
 
-# ========== ФУНКЦИЯ ДЛЯ ПИНГОВ (НЕ ДАЁТ УСНУТЬ) ==========
+# ========== ПИНГИ ==========
 async def keep_alive():
-    """Пингуем себя через внешний URL каждые 4 минуты, чтобы Render не усыплял бота"""
     while True:
-        await asyncio.sleep(240)  # 240 секунд = 4 минуты
+        await asyncio.sleep(240)
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:
-                # Пингуем через внешний URL (ВАЖНО: не localhost!)
-                response = await client.get(f"{RENDER_URL}/ping")
-                logging.info(f"Ping sent at {asyncio.get_event_loop().time()}, status: {response.status_code}")
-                
-                # Дополнительно пингуем health
+                await client.get(f"{RENDER_URL}/ping")
                 await client.get(f"{RENDER_URL}/health")
-        except Exception as e:
-            logging.error(f"Ping failed: {e}")
+        except:
+            pass
+
+# ========== ОТПРАВКА В MAX ==========
+async def send_message_to_max(user_id: int, text: str):
+    url = f"https://platform-api.max.ru/messages?user_id={user_id}"
+    headers = {"Authorization": TOKEN, "Content-Type": "application/json"}
+    payload = {"text": text}
+    async with httpx.AsyncClient() as client:
+        await client.post(url, headers=headers, json=payload)
+
+# ========== ПОЛУЧЕНИЕ ПОСЛЕДНЕГО КОММЕНТАРИЯ ИЗ СДЕЛКИ ==========
+async def get_last_comment_from_deal(deal_id: int) -> str:
+    """Получает последний комментарий из сделки через API Битрикс24"""
+    base = BITRIX_WEBHOOK
+    method = "crm.timeline.comment.list"
+    params = {
+        "filter": {"ENTITY_ID": deal_id, "ENTITY_TYPE": "deal"},
+        "order": {"CREATED": "DESC"},
+        "limit": 1
+    }
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(f"{base}/{method}.json", json=params, timeout=30)
+            result = response.json()
+            if result.get("result"):
+                comments = result["result"]
+                if comments:
+                    return comments[0].get("COMMENT", "")
+    except Exception as e:
+        print(f"Ошибка получения комментария: {e}")
+    return ""
 
 # ========== ОТПРАВКА В БИТРИКС24 ==========
-async def send_to_bitrix24(phone, name, car_number, car_model):
+async def send_to_bitrix24(phone, name, car_number, car_model, uid):
     base = BITRIX_WEBHOOK
     contact_data = {"fields": {"NAME": name, "PHONE": [{"VALUE": phone}]}}
     async with httpx.AsyncClient() as client:
@@ -868,9 +454,36 @@ async def send_to_bitrix24(phone, name, car_number, car_model):
                 "COMMENTS": f"Номер ТС: {car_number}\nМарка: {car_model}"
             }
         }
-        await client.post(f"{base}/crm.deal.add.json", json=deal_data, timeout=30)
+        deal_response = await client.post(f"{base}/crm.deal.add.json", json=deal_data, timeout=30)
+        deal_result = deal_response.json()
+        deal_id = deal_result.get("result")
+        if deal_id:
+            user_deal_map[deal_id] = uid
+            print(f"✅ Сделка {deal_id} привязана к пользователю {uid}")
 
-# ========== ОБРАБОТЧИКИ СОБЫТИЙ MAX ==========
+# ========== ВЕБХУК ОТ БИТРИКС24 ==========
+@app.post("/bitrix_webhook")
+async def bitrix_webhook(request: Request):
+    try:
+        data = await request.json()
+        event = data.get("event")
+        
+        if event == "ONCRMDEALUPDATE":
+            deal_id = data.get("data", {}).get("FIELDS", {}).get("ID")
+            
+            if deal_id and deal_id in user_deal_map:
+                user_id = user_deal_map[deal_id]
+                comment = await get_last_comment_from_deal(deal_id)
+                if comment:
+                    await send_message_to_max(user_id, f"📝 Ответ от менеджера:\n{comment}")
+                    print(f"✅ Ответ отправлен клиенту {user_id}")
+        
+        return {"status": "ok"}
+    except Exception as e:
+        print(f"❌ Ошибка вебхука: {e}")
+        return {"status": "error"}
+
+# ========== ОБРАБОТЧИКИ MAX ==========
 @dp.bot_started()
 async def on_start(event):
     await event.bot.send_message(chat_id=event.chat_id, text="Напишите /start")
@@ -952,30 +565,27 @@ async def handle(event):
             user_data[uid]['phone'],
             user_data[uid]['name'],
             user_data[uid]['car_number'],
-            user_data[uid]['car_model']
+            user_data[uid]['car_model'],
+            uid
         )
         del user_data[uid]
 
-# ========== ЭНДПОИНТЫ ДЛЯ ПИНГОВ ==========
 @app.get("/")
 async def root():
-    return {"status": "ok", "message": "Bot is running"}
+    return {"status": "ok"}
 
 @app.get("/ping")
 async def ping():
-    """Эндпоинт для внешних пингов (cron-job.org и keep_alive)"""
-    return {"status": "alive", "timestamp": asyncio.get_event_loop().time()}
+    return {"status": "alive"}
 
 @app.get("/health")
 async def health():
-    """Эндпоинт для проверки здоровья"""
-    return {"status": "ok", "bot_running": True}
+    return {"status": "ok"}
 
-# ========== ЗАПУСК БОТА ==========
 async def main():
-    await bot.delete_webhook()  # Удаляем вебхук, работаем через polling
-    asyncio.create_task(keep_alive())  # Запускаем пинги в фоне
+    await bot.delete_webhook()
+    asyncio.create_task(keep_alive())
     await dp.start_polling(bot)
 
 threading.Thread(target=lambda: asyncio.run(main()), daemon=True).start()
-print("🚀 Бот запущен и не будет засыпать!")
+print("🚀 Бот запущен")
