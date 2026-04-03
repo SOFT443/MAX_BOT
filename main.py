@@ -380,7 +380,7 @@ async def handle(event):
             "Здравствуйте! Это бот Драйвер.\n\n"
             "Я помогу вам забронировать автомобиль.\n\n"
             "Введите номер телефона в формате +7 999 123-45-67\n\n"
-            "1 - НАЗАД"
+            "0 - НАЗАД"
         )
         user_data[uid] = {"step": "phone"}
         return
@@ -390,13 +390,13 @@ async def handle(event):
 
     step = user_data[uid].get("step")
 
-    if text == "1":
+    if text == "0":
         if step == "car_number":
             user_data[uid]["step"] = "phone"
-            await event.message.answer("Введите номер телефона. 1 - НАЗАД")
+            await event.message.answer("Введите номер телефона. 0 - НАЗАД")
         elif step == "final":
             user_data[uid]["step"] = "car_number"
-            await event.message.answer("Введите номер ТС. 1 - НАЗАД")
+            await event.message.answer("Введите номер ТС. 0 - НАЗАД")
         return
 
     if step == "phone":
@@ -404,7 +404,7 @@ async def handle(event):
         if phone_clean.startswith(("+7", "8")):
             user_data[uid]["phone"] = text
             user_data[uid]["step"] = "car_number"
-            await event.message.answer("Введите номер ТС (например: Т731ХО797). 1 - НАЗАД")
+            await event.message.answer("Введите номер ТС (например: Т731ХО797). 0 - НАЗАД")
         else:
             await event.message.answer("Неверный формат. Пример: +7 999 123-45-67")
         return
@@ -417,14 +417,14 @@ async def handle(event):
             user_data[uid]["car_model"] = car_model
             await event.message.answer(
                 f"Проверьте данные:\nТелефон: {user_data[uid]['phone']}\nАвтомобиль: {car_number} ({car_model})\n\n"
-                f"Если все верно, нажмите 2.\nЕсли хотите исправить номер ТС, нажмите 1"
+                f"Если все верно, нажмите 1.\nЕсли хотите исправить номер ТС, нажмите 0"
             )
             user_data[uid]["step"] = "final"
         else:
-            await event.message.answer("Неверный номер ТС. Попробуйте снова. 1 - НАЗАД")
+            await event.message.answer("Неверный номер ТС. Попробуйте снова. 0 - НАЗАД")
         return
 
-    if step == "final" and text == "2":
+    if step == "final" and text == "1":
         await event.message.answer(f"Заявка отправлена!")
         await send_to_bitrix24(
             user_data[uid]['phone'],
