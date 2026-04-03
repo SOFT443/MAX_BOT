@@ -1,20 +1,4 @@
-import asyncio
-import logging
-import threading
-import httpx
-from fastapi import FastAPI, Request
-from maxapi import Bot, Dispatcher
-from maxapi.types import BotStarted, MessageCreated
-
-# ========== НАСТРОЙКИ ==========
-TOKEN = "f9LHodD0cOJYcBrUhdAkWfRzKqK57mFf5SExUIZIHXqG0PoiAgzYBDoEEOb2gBsW7OkfIOrxCdUu-J-BhcxK"
-BITRIX_WEBHOOK = "https://taksidrayver.bitrix24.ru/rest/1228/itdr0r0hi0mcui33"
-CATEGORY_ID = 14
-RENDER_URL = "https://max-booking-bot-1.onrender.com"
-# ===============================
-
-# ========== ВСЕ АВТОМОБИЛИ ==========
-VALID_CARS = {
+ID_CARS = {
     "Т731ХО797": "Belgee X50", "Е330ХТ797": "Belgee X50", "Е327ХС797": "Belgee X50",
     "Т290ХВ797": "Belgee X50", "Т218ХВ797": "Belgee X50", "Т780ХК797": "Belgee X50",
     "Т279ХВ797": "Belgee X50", "Е335ХТ797": "Belgee X50", "Т203ХР797": "Belgee X50",
